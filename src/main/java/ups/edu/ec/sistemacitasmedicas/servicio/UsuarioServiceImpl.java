@@ -3,10 +3,6 @@ package ups.edu.ec.sistemacitasmedicas.servicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ups.edu.ec.sistemacitasmedicas.modelo.Usuario;
-<<<<<<< HEAD
-import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
-=======
->>>>>>> 20e85044dbc0ef11ad551d494dae68775706fb28
 import ups.edu.ec.sistemacitasmedicas.modelo.UsuarioRol;
 import ups.edu.ec.sistemacitasmedicas.repositorio.RolRepositorio;
 import ups.edu.ec.sistemacitasmedicas.repositorio.UsuarioRepositorio;
