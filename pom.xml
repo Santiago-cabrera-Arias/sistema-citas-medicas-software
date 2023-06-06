@@ -14,7 +14,11 @@
 	<name>sistema-citas-medicas</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+<<<<<<< HEAD
 		<java.version>11</java.version>
+=======
+		<java.version>17</java.version>
+>>>>>>> 20e85044dbc0ef11ad551d494dae68775706fb28
 	</properties>
 	<dependencies>
 		<dependency>

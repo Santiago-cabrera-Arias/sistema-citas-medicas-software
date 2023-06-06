@@ -6,7 +6,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 20e85044dbc0ef11ad551d494dae68775706fb28
 @Entity
 @Table(name = "roles")
 public class Rol implements Serializable {
