@@ -169,14 +169,14 @@ public class Persona implements Serializable {
 
     // Método para asignar roles por tipo
 
-   /* public void asignarRolesPorTipo() {
+    public void asignarRolesPorTipo() {
         switch (tipo) {
             case "Cliente":
                 esCliente = true;
                 esMedico = false;
                 esEmpleado = false;
                 break;
-            case "Médico":
+            case "Medico":
                 esCliente = false;
                 esMedico = true;
                 esEmpleado = false;
@@ -192,5 +192,5 @@ public class Persona implements Serializable {
                 esEmpleado = false;
                 break;
         }
-    }*/
+    }
 }

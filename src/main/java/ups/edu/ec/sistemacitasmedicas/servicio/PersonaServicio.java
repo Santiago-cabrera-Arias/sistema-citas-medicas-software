@@ -4,10 +4,13 @@ package ups.edu.ec.sistemacitasmedicas.servicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
+import ups.edu.ec.sistemacitasmedicas.modelo.Usuario;
+import ups.edu.ec.sistemacitasmedicas.modelo.UsuarioRol;
 import ups.edu.ec.sistemacitasmedicas.repositorio.PersonaRepositorio;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PersonaServicio implements PersonaServicio1{
@@ -34,14 +37,19 @@ public class PersonaServicio implements PersonaServicio1{
             throw new PersonaExistenteException("Ya existe una persona con la misma cédula.");
         }
 
+        // Asignar roles por tipo
+        persona.asignarRolesPorTipo();
+
         return personaRepositorio.save(persona);
     }
+
 
     @Override
     public Persona eliminarPersona(Long id) {
         personaRepositorio.deleteById(id);
         return null;
     }
+
 }
 
 

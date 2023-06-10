@@ -23,15 +23,11 @@ public class Usuario implements Serializable {
     private String perfil;
     private String telefono;
 
-<<<<<<< HEAD
+
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")//relaciona tablas
     @JsonIgnore //deseliarizando.
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();//dando rol al usuario
-=======
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
-    @JsonIgnore //deseliarizando.
-    private Set<UsuarioRol> usuarioRoles = new HashSet<>();
->>>>>>> 20e85044dbc0ef11ad551d494dae68775706fb28
+
 
     public Usuario() {
     }

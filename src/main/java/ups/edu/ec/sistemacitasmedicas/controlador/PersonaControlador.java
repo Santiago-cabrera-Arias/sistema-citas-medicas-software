@@ -2,25 +2,35 @@ package ups.edu.ec.sistemacitasmedicas.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ups.edu.ec.sistemacitasmedicas.controlador.Response.ResponseRest;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
-import ups.edu.ec.sistemacitasmedicas.modelo.Rol;
-import ups.edu.ec.sistemacitasmedicas.modelo.Usuario;
-import ups.edu.ec.sistemacitasmedicas.modelo.UsuarioRol;
-import ups.edu.ec.sistemacitasmedicas.repositorio.PersonaRepositorio;
-import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
-import ups.edu.ec.sistemacitasmedicas.servicio.UsuarioServicio;
+import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio1;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 
 @RestController
 @RequestMapping("/personas")
 @CrossOrigin("*")
 
 public class PersonaControlador  {
-    private final PersonaRepositorio personaRepositorio;
+    @Autowired
+    PersonaServicio1 personaServicio;
+
+    @PostMapping("/registrar")
+    public Persona guardarPersona(@RequestBody Persona persona) throws Exception{
+        return personaServicio.crearPersona(persona);
+    }
+
+    @GetMapping("/{id}")
+    public Persona obtenerPersona(@PathVariable("id")Long id){
+        return personaServicio.obtenerPersonaPorId(id);
+    }
+
+    @DeleteMapping("/{personaid}")
+    public void eliminarUsuario(@PathVariable("personaid") Long id){
+        personaServicio.eliminarPersona(id);
+    }
+}
+    /*private final PersonaRepositorio personaRepositorio;
 
     @Autowired
     public PersonaControlador(PersonaRepositorio personaRepositorio) {
@@ -73,5 +83,5 @@ public class PersonaControlador  {
     public void eliminarPersona(@PathVariable Long id) {
         personaRepositorio.deleteById(id);
     }
-}
+}*/
 

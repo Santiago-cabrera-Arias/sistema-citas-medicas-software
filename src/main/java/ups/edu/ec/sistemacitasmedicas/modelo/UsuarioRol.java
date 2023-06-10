@@ -17,7 +17,7 @@ public class UsuarioRol {
     public UsuarioRol() {
     }
 
-<<<<<<< HEAD
+
 
     public Long getUsuarioRolId() {
         return usuarioRolId;
@@ -25,11 +25,9 @@ public class UsuarioRol {
     public Long getALong() {
         return usuarioRolId;
     }
-=======
-    public Long getUsuarioRolId() {
-        return usuarioRolId;
-    }
->>>>>>> 20e85044dbc0ef11ad551d494dae68775706fb28
+
+
+
 
     public void setUsuarioRolId(Long usuarioRolId) {
         this.usuarioRolId = usuarioRolId;
