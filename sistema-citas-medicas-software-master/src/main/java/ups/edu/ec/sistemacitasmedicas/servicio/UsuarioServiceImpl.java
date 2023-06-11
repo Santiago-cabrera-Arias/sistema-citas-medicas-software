@@ -14,41 +14,28 @@ import java.util.Set;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioServicio{
-
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
-    private PersonaRepositorio rolRepositorio1;
-
-
+    private PersonaRepositorio personaRepositorio;
 
     public Usuario guardarUsuario(Usuario usuario) throws Exception {
         // Obtener la Persona por su ID
-        Usuario persona = usuarioRepositorio.findByUsername(usuario.getUsername())
-                .orElseThrow(() -> new Exception("Usuario no encontrada"));
+        Persona persona = personaRepositorio.findById(usuario.getUsuarioId())
+                .orElseThrow(() -> new Exception("Persona no encontrada"));
 
         // Asignar la Persona al Usuario
-        usuario.setPersona(usuario.getPersona());
+        usuario.setPersona(persona);
 
         // Guardar el Usuario en la base de datos
         return usuarioRepositorio.save(usuario);
     }
 
-
-
-
     @Override
     public Usuario obtenerUsuario(String username) {
-
-        Optional<Usuario>usuario = usuarioRepositorio.findByUsername(username);
-
-        if (usuario == null){
-            System.out.println("El usuario no existe");
-        }
-
+        Optional<Usuario> usuario = usuarioRepositorio.findByUsername(username);
         return usuario.orElse(null);
-
     }
 
     @Override

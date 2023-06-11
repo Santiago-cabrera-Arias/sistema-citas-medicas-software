@@ -35,7 +35,9 @@ public class Persona implements Serializable {
 
     private Usuario usuario;
     // Constructores
-
+    public Persona() {
+        // Constructor sin argumentos
+    }
     public Persona(Long id_Persona, String cedula, String nombre, String apellido, String direccion, String telefono,
                    String correo, String estado, String fechaNacimiento, String sexo, String tipo, boolean esCliente,
                    boolean esMedico, boolean esEmpleado) {

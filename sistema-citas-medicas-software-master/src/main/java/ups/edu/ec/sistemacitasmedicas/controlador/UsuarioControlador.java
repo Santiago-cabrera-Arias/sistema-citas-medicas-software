@@ -16,18 +16,21 @@ import java.util.Set;
 @RequestMapping("/usuarios")
 @CrossOrigin("*")
 public class UsuarioControlador {
-
     @Autowired
-    UsuarioServicio usuarioServicio;
+    private UsuarioServicio usuarioServicio;
 
     @Autowired
     private PersonaRepositorio personaRepositorio;
 
-
     @PostMapping("/registrar")
     public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception {
+        if (usuario.getUsuarioId() == null) {
+            throw new Exception("El id del usuario no puede ser nulo");
+        }
+
         // Obtener la Persona por su ID
-        Persona persona = personaRepositorio.findById(usuario.getUsuarioId()).orElseThrow(() -> new Exception("Persona no encontrada"));
+        Persona persona = personaRepositorio.findById(usuario.getUsuarioId())
+                .orElseThrow(() -> new Exception("Persona no encontrada"));
 
         // Asignar la Persona al Usuario
         usuario.setPersona(persona);
@@ -36,20 +39,13 @@ public class UsuarioControlador {
         return usuarioServicio.guardarUsuario(usuario);
     }
 
-
-
     @GetMapping("/{username}")
-    public Usuario obtenerUsuario(@PathVariable("username")String username){
+    public Usuario obtenerUsuario(@PathVariable("username") String username) {
         return usuarioServicio.obtenerUsuario(username);
     }
 
     @DeleteMapping("/{usuarioId}")
-    public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId){
+    public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId) {
         usuarioServicio.eliminarUsuario(usuarioId);
     }
-
-
-
-
-
 }
