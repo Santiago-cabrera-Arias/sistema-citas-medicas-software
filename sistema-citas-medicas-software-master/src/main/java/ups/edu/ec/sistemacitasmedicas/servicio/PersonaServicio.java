@@ -42,12 +42,40 @@ public class PersonaServicio implements PersonaServicio1{
         return personaRepositorio.save(persona);
     }
 
-
-    @Override
-    public Persona eliminarPersona(Long id) {
-        personaRepositorio.deleteById(id);
-        return null;
+    public void eliminarPersona(Long id) {
+        Optional<Persona> personaOptional = personaRepositorio.findById(id);
+        personaOptional.ifPresent(personaRepositorio::delete);
     }
+
+
+    public Persona actualizarPersona(Persona persona) {
+        // Verificar si la persona existe en la base de datos
+        Optional<Persona> personaExistente = personaRepositorio.findById(persona.getId_Persona());
+        if (!personaExistente.isPresent()) {
+            throw new PersonaNoEncontradaException("No se encontró la persona a actualizar.");
+        }
+
+        // Actualizar los datos de la persona existente con los nuevos datos
+        Persona personaActualizada = personaExistente.get();
+        personaActualizada.setCedula(persona.getCedula());
+        personaActualizada.setNombre(persona.getNombre());
+        personaActualizada.setApellido(persona.getApellido());
+        personaActualizada.setDireccion(persona.getDireccion());
+        personaActualizada.setTelefono(persona.getTelefono());
+        personaActualizada.setCorreo(persona.getCorreo());
+        personaActualizada.setEstado(persona.getEstado());
+        personaActualizada.setFechaNacimiento(persona.getFechaNacimiento());
+        personaActualizada.setSexo(persona.getSexo());
+        personaActualizada.setTipo(persona.getTipo());
+        personaActualizada.setEsCliente(persona.isEsCliente());
+        personaActualizada.setEsMedico(persona.isEsMedico());
+        personaActualizada.setEsEmpleado(persona.isEsEmpleado());
+        // Actualiza otros atributos según tu modelo de datos
+
+        // Guardar los cambios en la base de datos
+        return personaRepositorio.save(personaActualizada);
+    }
+
 
 }
 

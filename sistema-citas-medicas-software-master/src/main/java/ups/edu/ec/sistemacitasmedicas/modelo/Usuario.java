@@ -20,7 +20,9 @@ public class Usuario implements Serializable {
     private String password;
 
     private boolean estado = true;
-    //private Long personaId;
+    //roles
+    private boolean G;
+    private boolean A;
 
 
     @ManyToOne
@@ -79,6 +81,25 @@ public class Usuario implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+
+    public void asignarRolesPorEncargo() {
+        switch (encargo) {
+            case "G":
+                G = true;
+                A = false;
+                break;
+            case "A":
+                G = false;
+                A = true;
+
+                break;
+
+            default:
+                G = false;
+                A = false;
+                break;
+        }
     }
 
 }

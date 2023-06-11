@@ -10,6 +10,6 @@ public interface PersonaServicio1 {
 
     public Persona  crearPersona(Persona persona);
 
-    public Persona eliminarPersona(Long id);
+    public void eliminarPersona(Long id);
 
 }

@@ -27,6 +27,7 @@ public class UsuarioServiceImpl implements UsuarioServicio{
 
         // Asignar la Persona al Usuario
         usuario.setPersona(persona);
+        usuario.asignarRolesPorEncargo();
 
         // Guardar el Usuario en la base de datos
         return usuarioRepositorio.save(usuario);
