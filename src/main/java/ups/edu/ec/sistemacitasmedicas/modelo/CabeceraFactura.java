@@ -28,4 +28,67 @@ public class CabeceraFactura {
     @JoinColumn(name = "persona_id")
     private Persona persona;
 
+    public Integer getCabeceraFactura_id() {
+        return cabeceraFactura_id;
+    }
+
+    public void setCabeceraFactura_id(Integer cabeceraFactura_id) {
+        this.cabeceraFactura_id = cabeceraFactura_id;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public double getTotalIva() {
+        return totalIva;
+    }
+
+    public void setTotalIva(double totalIva) {
+        this.totalIva = totalIva;
+    }
+
+    public double getTotalFactura() {
+        return totalFactura;
+    }
+
+    public void setTotalFactura(double totalFactura) {
+        this.totalFactura = totalFactura;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Set<DetalleFactura> getDetallesFacturas() {
+        return detallesFacturas;
+    }
+
+    public void setDetallesFacturas(Set<DetalleFactura> detallesFacturas) {
+        this.detallesFacturas = detallesFacturas;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
 }
