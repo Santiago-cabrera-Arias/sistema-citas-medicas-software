@@ -1,6 +1,7 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -10,34 +11,42 @@ import java.util.Set;
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long UsuarioId;
+    private Integer usuario_id;
+    private String encargo;
     private String username;
     private String password;
-    private String nombre;
-    private String apellido;
-    private String email;
-    private boolean enabled = true;
-    private String perfil;
-    private String telefono;
 
+    private boolean estado = true;
+    //roles
+    private boolean General;
+    private boolean Administrador;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")//relaciona tablas
-    @JsonIgnore //deseliarizando.
-    private Set<UsuarioRol> usuarioRoles = new HashSet<>();//dando rol al usuario
-
+    @ManyToOne
+    @JoinColumn(name = "persona_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Persona persona;
 
     public Usuario() {
     }
 
-    public Long getUsuarioId() {
-        return UsuarioId;
+    public Integer getUsuario_id() {
+        return usuario_id;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        UsuarioId = usuarioId;
+    public void setUsuario_id(Integer usuario_id) {
+        this.usuario_id = usuario_id;
+    }
+
+    public String getEncargo() {
+        return encargo;
+    }
+
+    public void setEncargo(String encargo) {
+        this.encargo = encargo;
     }
 
     public String getUsername() {
@@ -56,59 +65,53 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public String getNombre() {
-        return nombre;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
-    public String getApellido() {
-        return apellido;
+    public boolean isGeneral() {
+        return General;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setGeneral(boolean general) {
+        General = general;
     }
 
-    public String getEmail() {
-        return email;
+    public boolean isAdministrador() {
+        return Administrador;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAdministrador(boolean administrador) {
+        Administrador = administrador;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
-    public String getPerfil() {
-        return perfil;
+    public void asignarRolesPorEncargo() {
+        switch (encargo) {
+            case "General":
+                General = true;
+                Administrador = false;
+                break;
+            case "Administrador":
+                General = false;
+                Administrador = true;
+                break;
+            default:
+                General = false;
+                Administrador = false;
+                break;
+        }
     }
 
-    public void setPerfil(String perfil) {
-        this.perfil = perfil;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public Set<UsuarioRol> getUsuarioRoles() {
-        return usuarioRoles;
-    }
-
-    public void setUsuarioRoles(Set<UsuarioRol> usuarioRoles) {
-        this.usuarioRoles = usuarioRoles;
-    }
 }

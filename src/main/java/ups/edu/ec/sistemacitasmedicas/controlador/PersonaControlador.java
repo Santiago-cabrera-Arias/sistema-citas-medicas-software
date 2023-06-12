@@ -3,17 +3,19 @@ package ups.edu.ec.sistemacitasmedicas.controlador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
-import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio1;
+import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaNoEncontradaException;
+import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
 
 
 
 @RestController
 @RequestMapping("/personas")
 @CrossOrigin("*")
-
 public class PersonaControlador  {
+
     @Autowired
-    PersonaServicio1 personaServicio;
+    PersonaServicio personaServicio;
+
 
     @PostMapping("/registrar")
     public Persona guardarPersona(@RequestBody Persona persona) throws Exception{
@@ -21,44 +23,19 @@ public class PersonaControlador  {
     }
 
     @GetMapping("/{id}")
-    public Persona obtenerPersona(@PathVariable("id")Long id){
+    public Persona obtenerPersona(@PathVariable("id")Integer id){
         return personaServicio.obtenerPersonaPorId(id);
     }
 
-    @DeleteMapping("/{personaid}")
-    public void eliminarUsuario(@PathVariable("personaid") Long id){
+    @DeleteMapping("/{id}")
+    public void eliminarPersona(@PathVariable Integer id) {
         personaServicio.eliminarPersona(id);
-    }
-}
-    /*private final PersonaRepositorio personaRepositorio;
-
-    @Autowired
-    public PersonaControlador(PersonaRepositorio personaRepositorio) {
-        this.personaRepositorio = personaRepositorio;
-    }
-
-    // Obtener todas las personas
-    @GetMapping("/")
-    public List<Persona> obtenerTodasLasPersonas() {
-        return personaRepositorio.findAll();
-    }
-
-    // Obtener una persona por ID
-    @GetMapping("/{id}")
-    public Persona obtenerPersonaPorId(@PathVariable Long id) {
-        return personaRepositorio.findById(id).orElse(null);
-    }
-
-    // Crear una nueva persona
-    @PostMapping("/")
-    public Persona crearPersona(@RequestBody Persona persona) {
-        return personaRepositorio.save(persona);
     }
 
     // Actualizar una persona existente
     @PutMapping("/{id}")
-    public Persona actualizarPersona(@PathVariable Long id, @RequestBody Persona personaActualizada) {
-        Persona personaExistente = personaRepositorio.findById(id).orElse(null);
+    public Persona actualizarPersona(@PathVariable Integer id, @RequestBody Persona personaActualizada) {
+        Persona personaExistente = personaServicio.obtenerPersonaPorId(id);
 
         if (personaExistente != null) {
             personaExistente.setCedula(personaActualizada.getCedula());
@@ -72,16 +49,14 @@ public class PersonaControlador  {
             personaExistente.setSexo(personaActualizada.getSexo());
             personaExistente.setTipo(personaActualizada.getTipo());
 
-            return personaRepositorio.save(personaExistente);
+            // Actualiza otros atributos según tu modelo de datos
+
+            return personaServicio.crearPersona(personaExistente);
         } else {
-            return null;
+            throw new PersonaNoEncontradaException("No se encontró la persona a actualizar.");
         }
     }
 
-    // Eliminar una persona por ID
-    @DeleteMapping("/{id}")
-    public void eliminarPersona(@PathVariable Long id) {
-        personaRepositorio.deleteById(id);
-    }
-}*/
+
+}
 

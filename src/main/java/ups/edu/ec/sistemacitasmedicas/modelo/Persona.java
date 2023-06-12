@@ -1,21 +1,18 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "personas")
-
 public class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer persona_id;
     private String cedula;
     private String nombre;
     private String apellido;
@@ -28,16 +25,25 @@ public class Persona implements Serializable {
     private String tipo;
 
     // Roles
-    private boolean esCliente;
-    private boolean esMedico;
-    private boolean esEmpleado;
+    private boolean esCliente = false;
+    private boolean esMedico = false;
+    private boolean esEmpleado = false;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "persona")
+    private Set<Usuario> usuarios = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+    Set<CabeceraFactura> cabeceraFacturas = new HashSet<>();
+
+
 
     // Constructores
-
-    public Persona(Long id, String cedula, String nombre, String apellido, String direccion, String telefono,
+    public Persona() {
+        // Constructor sin argumentos
+    }
+    public Persona(Integer persona_id, String cedula, String nombre, String apellido, String direccion, String telefono,
                    String correo, String estado, String fechaNacimiento, String sexo, String tipo, boolean esCliente,
                    boolean esMedico, boolean esEmpleado) {
-        this.id = id;
+        this.persona_id = persona_id;
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -53,14 +59,16 @@ public class Persona implements Serializable {
         this.esEmpleado = esEmpleado;
     }
 
+
     // Métodos getter y setter
 
-    public Long getId() {
-        return id;
+
+    public Integer getPersona_id() {
+        return persona_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPersona_id(Integer persona_id) {
+        this.persona_id = persona_id;
     }
 
     public String getCedula() {
@@ -167,7 +175,13 @@ public class Persona implements Serializable {
         this.esEmpleado = esEmpleado;
     }
 
-    // Método para asignar roles por tipo
+    public Set<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(Set<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 
     public void asignarRolesPorTipo() {
         switch (tipo) {
