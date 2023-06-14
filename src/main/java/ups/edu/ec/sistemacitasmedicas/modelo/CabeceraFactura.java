@@ -1,7 +1,9 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -23,8 +25,8 @@ public class CabeceraFactura {
     private double totalFactura;
     private boolean estado;
 //
-    @JsonIgnore
-    @OneToMany(mappedBy = "cabeceraFactura")
+    @OneToMany(mappedBy = "cabeceraFactura", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"cabeceraFactura","persona"})
     private Set<DetalleFactura> detallesFacturas = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
