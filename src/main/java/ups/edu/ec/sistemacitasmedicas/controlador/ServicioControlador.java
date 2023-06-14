@@ -21,13 +21,29 @@ public class ServicioControlador {
         return servicioService.save(servicio);
     }
 
-    public Servicio editarServicio(Servicio servicio){
+    @PutMapping("/editarServicio/{id}")
+    public Servicio editarServicio(@PathVariable Integer id, @RequestBody Servicio servicio) throws Exception{
 
-        return null;
+        Servicio serv = servicioService.obtenerServicioPorId(id);
+
+        if (serv == null){
+            throw new Exception("El servicio no existe...");
+        }
+
+        // Actualizar los campos necesarios con los nuevos datos
+        serv.setNombreServicio(servicio.getNombreServicio());
+        serv.setPrecio(servicio.getPrecio());
+        serv.setIva(servicio.getIva());
+        serv.setEstado(servicio.getEstado());
+
+        return servicioService.update(serv);
+
     }
 
-
-
+    @DeleteMapping("/eliminarServicio/{id}")
+    public void eliminarServicio(@PathVariable Integer id){
+            servicioService.delete(id);
+        }
 
 
 }

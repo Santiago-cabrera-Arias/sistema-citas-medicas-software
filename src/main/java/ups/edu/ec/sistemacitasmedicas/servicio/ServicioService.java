@@ -7,10 +7,11 @@ import java.util.Optional;
 
 public interface ServicioService {
 
-    public Servicio save(Servicio servicio);
-    public Optional<Servicio> get(Integer id);
-    public void update(Servicio servicio);
-    public void delete(Integer id);
-    public List<Servicio> findAll();
+    Servicio save(Servicio servicio);
+    Optional<Servicio> get(Integer id) throws Exception;
+    Servicio update(Servicio servicio);
+    void delete(Integer id);
+    List<Servicio> findAll();
+    Servicio obtenerServicioPorId(Integer id);
 
 }

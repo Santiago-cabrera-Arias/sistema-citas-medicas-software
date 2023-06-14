@@ -14,19 +14,22 @@ public class CabeceraFactura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cabeceraFactura_id;
-    @JsonFormat(pattern = "dd-MM-yyyy")
+//    @JsonFormat(pattern = "dd-MM-yyyy")
     private String fecha;
     private double subtotal;
     private double totalIva;
     private double totalFactura;
-    private String estado;
+    private boolean estado;
 //
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cabeceraFactura")
+    @OneToMany(mappedBy = "cabeceraFactura")
     private Set<DetalleFactura> detallesFacturas = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "persona_id")
     private Persona persona;
+
+    public CabeceraFactura() {
+    }
 
     public Integer getCabeceraFactura_id() {
         return cabeceraFactura_id;
@@ -68,11 +71,11 @@ public class CabeceraFactura {
         this.totalFactura = totalFactura;
     }
 
-    public String getEstado() {
+    public boolean isEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 

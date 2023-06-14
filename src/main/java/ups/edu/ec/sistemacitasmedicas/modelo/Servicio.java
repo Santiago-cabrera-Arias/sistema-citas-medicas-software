@@ -2,6 +2,8 @@ package ups.edu.ec.sistemacitasmedicas.modelo;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -14,8 +16,11 @@ public class Servicio {
     private String nombreServicio;
     private double precio;
     private double iva;
+    private int cantidad;
     private String estado;
 
+    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
+    private Set<DetalleFactura> detallesFacturas = new HashSet<>();
 
     public Servicio() {
     }
@@ -58,5 +63,21 @@ public class Servicio {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Set<DetalleFactura> getDetallesFacturas() {
+        return detallesFacturas;
+    }
+
+    public void setDetallesFacturas(Set<DetalleFactura> detallesFacturas) {
+        this.detallesFacturas = detallesFacturas;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 }

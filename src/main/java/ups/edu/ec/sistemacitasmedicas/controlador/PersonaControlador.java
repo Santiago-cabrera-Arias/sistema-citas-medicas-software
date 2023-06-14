@@ -22,9 +22,9 @@ public class PersonaControlador  {
         return personaServicio.crearPersona(persona);
     }
 
-    @GetMapping("/{id}")
-    public Persona obtenerPersona(@PathVariable("id")Integer id){
-        return personaServicio.obtenerPersonaPorId(id);
+    @GetMapping("/{persona_id}")
+    public Persona obtenerPersona(@PathVariable("persona_id")Integer persona_id){
+        return personaServicio.obtenerPersonaPorId(persona_id);
     }
 
     @DeleteMapping("/{id}")

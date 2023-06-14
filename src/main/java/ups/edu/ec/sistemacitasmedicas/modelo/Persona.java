@@ -31,9 +31,8 @@ public class Persona implements Serializable {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "persona")
     private Set<Usuario> usuarios = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     Set<CabeceraFactura> cabeceraFacturas = new HashSet<>();
-
 
 
     // Constructores

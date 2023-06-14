@@ -17,8 +17,8 @@ public class PersonaServicioImpl implements PersonaServicio {
     @Autowired
     private PersonaRepositorio personaRepositorio;
 
-    public Persona obtenerPersonaPorId(Integer id) {
-        Optional<Persona> personaOptional = personaRepositorio.findById(id);
+    public Persona obtenerPersonaPorId(Integer persona_id) {
+        Optional<Persona> personaOptional = personaRepositorio.findById(persona_id);
         return personaOptional.orElse(null);
     }
 
@@ -38,6 +38,11 @@ public class PersonaServicioImpl implements PersonaServicio {
     public void eliminarPersona(Integer id) {
         Optional<Persona> personaOptional = personaRepositorio.findById(id);
         personaOptional.ifPresent(personaRepositorio::delete);
+    }
+
+    @Override
+    public Optional<Persona> get(Integer persona_id) {
+        return personaRepositorio.findById(persona_id);
     }
 
     public Persona actualizarPersona(Persona persona) {

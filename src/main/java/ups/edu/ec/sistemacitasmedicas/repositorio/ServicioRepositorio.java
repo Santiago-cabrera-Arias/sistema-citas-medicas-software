@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ServicioRepositorio extends JpaRepository<Servicio, Integer> {
 
+    Optional<Servicio> findById(Integer servicio_id);
 }
