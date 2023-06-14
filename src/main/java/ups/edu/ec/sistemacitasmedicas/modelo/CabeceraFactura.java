@@ -1,6 +1,7 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -15,17 +16,19 @@ public class CabeceraFactura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cabeceraFactura_id;
-//    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date fecha;
     private double subtotal;
     private double totalIva;
     private double totalFactura;
     private boolean estado;
 //
+    @JsonIgnore
     @OneToMany(mappedBy = "cabeceraFactura")
     private Set<DetalleFactura> detallesFacturas = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "persona_id")
     private Persona persona;
 

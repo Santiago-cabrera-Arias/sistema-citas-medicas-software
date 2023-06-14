@@ -1,8 +1,11 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -20,7 +23,8 @@ public class Servicio {
     private String estado;
 
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
-    private Set<DetalleFactura> detallesFacturas = new HashSet<>();
+    @JsonIgnore
+    private List<DetalleFactura> detallesFacturas = new ArrayList<>();
 
     public Servicio() {
     }
@@ -65,11 +69,11 @@ public class Servicio {
         this.estado = estado;
     }
 
-    public Set<DetalleFactura> getDetallesFacturas() {
+    public List<DetalleFactura> getDetallesFacturas() {
         return detallesFacturas;
     }
 
-    public void setDetallesFacturas(Set<DetalleFactura> detallesFacturas) {
+    public void setDetallesFacturas(List<DetalleFactura> detallesFacturas) {
         this.detallesFacturas = detallesFacturas;
     }
 

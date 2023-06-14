@@ -2,9 +2,7 @@ package ups.edu.ec.sistemacitasmedicas.servicio.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.modelo.Servicio;
-import ups.edu.ec.sistemacitasmedicas.modelo.Usuario;
 import ups.edu.ec.sistemacitasmedicas.repositorio.ServicioRepositorio;
 import ups.edu.ec.sistemacitasmedicas.servicio.ServicioService;
 
@@ -39,12 +37,12 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     public List<Servicio> findAll() {
-        return null;
+        return servicioRepositorio.findAll();
     }
 
     @Override
-    public Servicio obtenerServicioPorId(Integer id) {
-        Optional<Servicio> servicioOptional = servicioRepositorio.findById(id);
+    public Servicio obtenerServicioPorServicioId(Integer servicio_id) {
+        Optional<Servicio> servicioOptional = servicioRepositorio.findById(servicio_id);
         return servicioOptional.orElse(null);
     }
 }

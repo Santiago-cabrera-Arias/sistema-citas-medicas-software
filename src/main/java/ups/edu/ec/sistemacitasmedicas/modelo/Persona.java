@@ -1,9 +1,12 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -32,7 +35,7 @@ public class Persona implements Serializable {
     private Set<Usuario> usuarios = new HashSet<>();
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
-    Set<CabeceraFactura> cabeceraFacturas = new HashSet<>();
+    List<CabeceraFactura> cabeceraFacturas = new ArrayList<>();
 
 
     // Constructores
@@ -180,6 +183,14 @@ public class Persona implements Serializable {
 
     public void setUsuarios(Set<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public List<CabeceraFactura> getCabeceraFacturas() {
+        return cabeceraFacturas;
+    }
+
+    public void setCabeceraFacturas(List<CabeceraFactura> cabeceraFacturas) {
+        this.cabeceraFacturas = cabeceraFacturas;
     }
 
     public void asignarRolesPorTipo() {

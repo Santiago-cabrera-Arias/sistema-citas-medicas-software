@@ -12,5 +12,6 @@ public interface CabeceraFacturaServicio {
     Optional<CabeceraFactura> findById(Integer id);
     CabeceraFactura save(CabeceraFactura cabeceraFactura);
     List<CabeceraFactura> findByPersona(Persona persona);
+    CabeceraFactura obtenerCabeceraFacturaPorId(Integer cabeceraFactura_id);
 
 }

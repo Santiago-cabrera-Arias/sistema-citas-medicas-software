@@ -12,6 +12,6 @@ public interface ServicioService {
     Servicio update(Servicio servicio);
     void delete(Integer id);
     List<Servicio> findAll();
-    Servicio obtenerServicioPorId(Integer id);
+    Servicio obtenerServicioPorServicioId(Integer servicio_id);
 
 }

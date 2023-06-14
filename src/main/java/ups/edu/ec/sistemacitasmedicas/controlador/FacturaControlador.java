@@ -14,7 +14,9 @@ import ups.edu.ec.sistemacitasmedicas.servicio.*;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @RestController
@@ -84,6 +86,19 @@ public class FacturaControlador {
             cabeceraFactura.setTotalIva(totalIva);
             cabeceraFactura.setTotalFactura(totalFactura);
 
+
+            Servicio servicio = servicioOptional.get();
+
+            if (servicio.getCantidad() == 0){
+                throw new Exception("No esta ese servicio disponible");
+            }
+
+            int cantidadServicio = servicioOptional.get().getCantidad() - cantidad;
+            servicio.setCantidad(cantidadServicio);
+
+
+            servicioService.update(servicio);
+
             // Guardar la factura en la base de datos
             cabeceraFacturaServicio.save(cabeceraFactura);
             detalleFacturaServicio.save(detalleFactura);
@@ -113,7 +128,7 @@ public class FacturaControlador {
             content.append("\n");
             content.append("Nombre: " + servicioOptional.get().getNombreServicio());
             content.append("\n");
-            content.append("Cantidad: "+ servicioOptional.get().getCantidad());
+            content.append("Cantidad: "+ cantidad);
             content.append("\n");
             content.append("Subtotal: " + subtotal);
             content.append("\n");
@@ -129,6 +144,16 @@ public class FacturaControlador {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Ocurrió un error al crear la factura: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/obtenerFacturas")
+    public List<CabeceraFactura> obtenerFacturas() {
+        return cabeceraFacturaServicio.findAll();
+    }
+
+    @GetMapping("/{servicio_id}")
+    public CabeceraFactura obtenerFacturaPorId(@PathVariable Integer servicio_id){
+        return cabeceraFacturaServicio.obtenerCabeceraFacturaPorId(servicio_id);
     }
 
 }

@@ -81,4 +81,7 @@ public class DetalleFactura {
     public void setCabeceraFactura(CabeceraFactura cabeceraFactura) {
         this.cabeceraFactura = cabeceraFactura;
     }
+
+
+
 }
