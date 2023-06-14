@@ -3,6 +3,7 @@ package ups.edu.ec.sistemacitasmedicas.modelo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public class CabeceraFactura {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cabeceraFactura_id;
 //    @JsonFormat(pattern = "dd-MM-yyyy")
-    private String fecha;
+    private Date fecha;
     private double subtotal;
     private double totalIva;
     private double totalFactura;
@@ -39,11 +40,11 @@ public class CabeceraFactura {
         this.cabeceraFactura_id = cabeceraFactura_id;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

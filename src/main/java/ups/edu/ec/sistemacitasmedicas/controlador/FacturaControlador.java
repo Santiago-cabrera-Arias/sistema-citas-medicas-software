@@ -5,20 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaNoEncontradaException;
-import ups.edu.ec.sistemacitasmedicas.Exceptions.ServicioNoEncontradoException;
+
 import ups.edu.ec.sistemacitasmedicas.modelo.CabeceraFactura;
 import ups.edu.ec.sistemacitasmedicas.modelo.DetalleFactura;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.modelo.Servicio;
-import ups.edu.ec.sistemacitasmedicas.servicio.CabeceraFacturaServicio;
-import ups.edu.ec.sistemacitasmedicas.servicio.DetalleFacturaServicio;
-import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
-import ups.edu.ec.sistemacitasmedicas.servicio.ServicioService;
+import ups.edu.ec.sistemacitasmedicas.servicio.*;
 
-import java.util.List;
+
+import java.util.Date;
 import java.util.Optional;
-import java.util.Set;
+
 
 @RestController
 @RequestMapping("/facturaControlador")
@@ -37,67 +34,17 @@ public class FacturaControlador {
     @Autowired
     private ServicioService servicioService;
 
-//    @PostMapping("/crear")
-//    public void crearFactura(@RequestParam("persona_id") Integer persona_id, @RequestBody List<DetalleFactura> detallesFactura) throws Exception{
-//        // Obtener la persona de la base de datos
-//        Optional<Persona> personaOptional = personaServicio.get(persona_id);
-//        Persona persona = personaOptional.orElseThrow(() -> new PersonaNoEncontradaException("La persona no existe"));
-//
-//        // Crear la cabecera de la factura
-//        CabeceraFactura cabeceraFactura = new CabeceraFactura();
-//        cabeceraFactura.setFecha("22-12-2002");
-//        cabeceraFactura.setSubtotal(0.0);
-//        cabeceraFactura.setTotalIva(0.0);
-//        cabeceraFactura.setTotalFactura(0.0);
-//        cabeceraFactura.setEstado(true);
-//        cabeceraFactura.setPersona(persona);
-//
-//        // Guardar la cabecera de la factura en la base de datos
-//        cabeceraFactura = cabeceraFacturaServicio.save(cabeceraFactura);
-//
-//        // Calcular los montos de la factura
-//        double subtotal = 0.0;
-//        double totalIva = 0.0;
-//        double totalFactura = 0.0;
-//
-//        for (DetalleFactura detalle : detallesFactura) {
-//            // Obtener el servicio de la base de datos
-//            Optional<Servicio> servicioOptional = servicioService.get(detalle.getServicio().getServicio_id());
-//            Servicio servicio = servicioOptional.orElseThrow(() -> new ServicioNoEncontradoException("El servicio no existe"));
-//
-//            // Calcular el total del detalle de la factura
-//            double total = detalle.getCantidad() * servicio.getPrecio();
-//            subtotal += total;
-//
-//            // Crear el detalle de la factura
-//            DetalleFactura detalleFactura = new DetalleFactura();
-//            detalleFactura.setNombre(servicio.getNombreServicio());
-//            detalleFactura.setCantidad(detalle.getCantidad());
-//            detalleFactura.setPrecioUnitario(servicio.getPrecio());
-//            detalleFactura.setTotal(total);
-//            detalleFactura.setCabeceraFactura(cabeceraFactura);
-//
-//            // Guardar el detalle de la factura en la base de datos
-//            detalleFacturaServicio.save(detalleFactura);
-//        }
-//
-//        // Calcular los montos de la factura
-//        totalIva = subtotal * 0.15; // Suponiendo un IVA del 15%
-//        totalFactura = subtotal + totalIva;
-//
-//        // Actualizar los montos en la cabecera de la factura
-//        cabeceraFactura.setSubtotal(subtotal);
-//        cabeceraFactura.setTotalIva(totalIva);
-//        cabeceraFactura.setTotalFactura(totalFactura);
-//        cabeceraFacturaServicio.save(cabeceraFactura);
-//    }
+    @Autowired
+    private EmailSenderServicio emailSenderServicio;
 
 
     @PostMapping("/crear/{persona_id}/{servicio_id}/{cantidad}")
     public ResponseEntity<?> crearFactura(@PathVariable Integer persona_id,
                                           @PathVariable Integer servicio_id,
                                           @PathVariable int cantidad) {
+
         try {
+
             // Verificar si la persona y el servicio existen en la base de datos
             Persona personaOptional = personaServicio.obtenerPersonaPorId(persona_id);
             Optional<Servicio> servicioOptional = servicioService.get(servicio_id);
@@ -114,7 +61,7 @@ public class FacturaControlador {
 
             // Crear la cabecera de la factura
             CabeceraFactura cabeceraFactura = new CabeceraFactura();
-            cabeceraFactura.setFecha("17-02-2002");
+            cabeceraFactura.setFecha(new Date());
             cabeceraFactura.setEstado(true);
 
             cabeceraFactura.setPersona(personaOptional);
@@ -122,6 +69,7 @@ public class FacturaControlador {
             // Crear el detalle de la factura
             DetalleFactura detalleFactura = new DetalleFactura();
             detalleFactura.setCantidad(cantidad);
+            detalleFactura.setNombre(servicioOptional.get().getNombreServicio());
             detalleFactura.setPrecioUnitario(servicioOptional.get().getPrecio());
             detalleFactura.setTotal(cantidad * servicioOptional.get().getPrecio());
             detalleFactura.setServicio(servicioOptional.get());
@@ -139,6 +87,42 @@ public class FacturaControlador {
             // Guardar la factura en la base de datos
             cabeceraFacturaServicio.save(cabeceraFactura);
             detalleFacturaServicio.save(detalleFactura);
+
+            // Enviar el email con la factura
+            String toUser = personaOptional.getCorreo(); // Obtén el correo electrónico del destinatario
+            String subject = "Factura creada"; // Asunto del email
+
+            StringBuffer content = new StringBuffer();
+            content.append("Factura sistema citas medicas");
+
+            content.append("\n");
+            content.append("\n");
+
+            content.append("Datos de la persona:");
+            content.append("\n");
+            content.append("Nombre: " + personaOptional.getNombre());
+            content.append("\n");
+            content.append("Apellido: " + personaOptional.getApellido());
+            content.append("\n");
+            content.append("Email: " + personaOptional.getCorreo());
+
+
+            content.append("\n");
+            content.append("\n");
+            content.append("Detalles de la factura:");
+            content.append("\n");
+            content.append("Nombre: " + servicioOptional.get().getNombreServicio());
+            content.append("\n");
+            content.append("Cantidad: "+ servicioOptional.get().getCantidad());
+            content.append("\n");
+            content.append("Subtotal: " + subtotal);
+            content.append("\n");
+            content.append("Total IVA: " + totalIva);
+            content.append("\n");
+            content.append("Total factura: " + totalFactura);
+            content.append("\n");
+
+            emailSenderServicio.sendEmail(toUser, subject, content);
 
             return ResponseEntity.ok("La factura se ha creado correctamente.");
         } catch (Exception e) {
