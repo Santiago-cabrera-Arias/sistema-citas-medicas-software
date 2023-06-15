@@ -27,9 +27,10 @@ public class PersonaControlador  {
         return personaServicio.obtenerPersonaPorId(persona_id);
     }
 
-    @DeleteMapping("/{id}")
-    public void eliminarPersona(@PathVariable Integer id) {
-        personaServicio.eliminarPersona(id);
+
+    @DeleteMapping("/{persona_id}")
+    public void eliminarPersona(@PathVariable Integer persona_id) {
+        personaServicio.eliminarPersona(persona_id);
     }
 
     // Actualizar una persona existente
