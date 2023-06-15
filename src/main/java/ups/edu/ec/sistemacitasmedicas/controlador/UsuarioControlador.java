@@ -43,4 +43,21 @@ public class UsuarioControlador {
     public void eliminarUsuario(@PathVariable("usuarioId") Integer usuarioId) {
         usuarioServicio.eliminarUsuario(usuarioId);
     }
+
+    @PostMapping("/login")
+    public String login(@RequestBody Usuario usuario) {
+        // Obtén el usuario de la base de datos por el nombre de usuario
+        Usuario usuarioBD = usuarioServicio.obtenerUsuario(usuario.getUsername());
+
+        // Verifica si el usuario existe y si la contraseña coincide
+        if (usuarioBD != null && usuarioBD.getPassword().equals(usuario.getPassword())) {
+            return "Inicio de sesión exitoso";
+        } else {
+            return "Credenciales de inicio de sesión inválidas";
+        }
+    }
+
+
+
+
 }
