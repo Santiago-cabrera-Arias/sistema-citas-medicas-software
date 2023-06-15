@@ -1,8 +1,10 @@
 package ups.edu.ec.sistemacitasmedicas.servicio;
 
 
+import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.modelo.Usuario;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface UsuarioServicio {
@@ -12,5 +14,6 @@ public interface UsuarioServicio {
     public Usuario obtenerUsuario(String username);
 
     public void eliminarUsuario(Integer id);
+
 
 }
