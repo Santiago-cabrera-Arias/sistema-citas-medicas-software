@@ -1,7 +1,5 @@
 package ups.edu.ec.sistemacitasmedicas.controlador;
 
-
-
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,26 +9,27 @@ import org.springframework.web.bind.annotation.*;
 import ups.edu.ec.sistemacitasmedicas.modelo.Cita;
 import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
 import ups.edu.ec.sistemacitasmedicas.repositorio.CitaRepositorio;
+import ups.edu.ec.sistemacitasmedicas.repositorio.MedicoRepositorio;
 import ups.edu.ec.sistemacitasmedicas.servicio.CitaServicio;
+import ups.edu.ec.sistemacitasmedicas.servicio.MedicoServicio;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 @RestController
-@RequestMapping("/citas")
-public class CitaControlador {
+@RequestMapping("/medico")
+public class MedicoControlador {
     @Autowired
-    private final CitaControlador citaControlador=null;
-    private final CitaServicio iCitaServices=null;
-    private final Cita cita=null;
-    private final CitaRepositorio citaRepositorio=null;
+    private final MedicoControlador citaControlador=null;
+    private final MedicoServicio iMedicoServices=null;
+
+    private final MedicoRepositorio medicoRepositorio=null;
 
 
-    @PostMapping("/saveCita")
-    public ResponseEntity<?> savaeCita(@Valid @RequestBody Cita cita, BindingResult result){
+    @PostMapping("/saveMedico")
+    public ResponseEntity<?> saveMedico(@Valid @RequestBody Medico medico, BindingResult result){
         Map<String, Object> response = new HashMap<>();
 
         if (result.hasErrors()){
@@ -41,9 +40,9 @@ public class CitaControlador {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try{
-            Cita registerCita=iCitaServices.guardarCita(cita);
-            response.put("message", "cita creado");
-            response.put("result", registerCita);
+            Medico registerMedico=iMedicoServices.guardarMedico(medico);
+            response.put("message", "Medico creado");
+            response.put("result", registerMedico);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){
             response.put("messege", "Error en el servidor");
@@ -55,11 +54,11 @@ public class CitaControlador {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteMedicorById(@PathVariable Long id) {
+    public ResponseEntity<String> deleteMedicoById(@PathVariable Long id) {
         try {
-            Optional<Medico> optionalDoctor = Optional.ofNullable(iCitaServices.obtenerCitaPorId(id).getMedico());
+            Optional<Medico> optionalDoctor = Optional.ofNullable(iMedicoServices.obtenerMedicoPorId(id).getMedico());
             if (optionalDoctor.isPresent()) {
-                iCitaServices.eliminarCita(id);
+                iMedicoServices.eliminarMedico(id);
                 //medicoRepositorio.deleteById(id);
                 return ResponseEntity.ok("Doctor eliminado exitosamente");
             } else {
@@ -73,14 +72,14 @@ public class CitaControlador {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateMedicoById(@PathVariable Long id, @RequestBody Medico updatedMedico) {
         try {
-            Optional<Medico> optionalMedico = Optional.ofNullable(iCitaServices.obtenerCitaPorId(id).getMedico());
+            Optional<Medico> optionalMedico = Optional.ofNullable(iMedicoServices.obtenerMedicoPorId(id).getMedico());
             if (optionalMedico.isPresent()) {
                 Medico medico = optionalMedico.get();
                 medico.setNombre(updatedMedico.getNombre());
                 medico.setCorreo(updatedMedico.getCorreo());
                 // Actualizar otros campos según sea necesario
 
-                citaRepositorio.save(cita);
+                medicoRepositorio.save(medico);
 
                 return ResponseEntity.ok("Doctor actualizado exitosamente");
             } else {

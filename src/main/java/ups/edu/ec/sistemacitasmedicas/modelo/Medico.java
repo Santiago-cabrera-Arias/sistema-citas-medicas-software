@@ -45,4 +45,23 @@ public class Medico extends Persona {
         this.telenoConsultorio = telenoConsultorio;
     }
 
+    public String getTelenoConsultorio() {
+        return telenoConsultorio;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public Especialidades getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(Especialidades especialidad) {
+        this.especialidad = especialidad;
+    }
 }
