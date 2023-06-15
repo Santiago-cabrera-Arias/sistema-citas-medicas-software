@@ -2,6 +2,7 @@ package ups.edu.ec.sistemacitasmedicas.servicio.impl;
 
 import ups.edu.ec.sistemacitasmedicas.modelo.Especialidades;
 import ups.edu.ec.sistemacitasmedicas.repositorio.EspecialidadRepositorio;
+import ups.edu.ec.sistemacitasmedicas.servicio.EspecialidadServicio;
 
 import java.util.List;
 import java.util.Optional;
