@@ -37,6 +37,10 @@ public class Persona implements Serializable {
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     List<CabeceraFactura> cabeceraFacturas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<Medico> medicoEspecialidades = new ArrayList<>();
+
 
     // Constructores
     public Persona() {
@@ -191,6 +195,14 @@ public class Persona implements Serializable {
 
     public void setCabeceraFacturas(List<CabeceraFactura> cabeceraFacturas) {
         this.cabeceraFacturas = cabeceraFacturas;
+    }
+
+    public List<Medico> getMedicoEspecialidades() {
+        return medicoEspecialidades;
+    }
+
+    public void setMedicoEspecialidades(List<Medico> medicoEspecialidades) {
+        this.medicoEspecialidades = medicoEspecialidades;
     }
 
     public void asignarRolesPorTipo() {
