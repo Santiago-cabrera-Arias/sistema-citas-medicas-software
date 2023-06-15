@@ -121,7 +121,6 @@ public class FacturaControlador {
             content.append("\n");
             content.append("Email: " + personaOptional.getCorreo());
 
-
             content.append("\n");
             content.append("\n");
             content.append("Detalles de la factura:");
@@ -146,6 +145,8 @@ public class FacturaControlador {
         }
     }
 
+
+
     @GetMapping("/obtenerFacturas")
     public List<CabeceraFactura> obtenerFacturas() {
         return cabeceraFacturaServicio.findAll();
@@ -155,5 +156,7 @@ public class FacturaControlador {
     public CabeceraFactura obtenerFacturaPorId(@PathVariable Integer servicio_id){
         return cabeceraFacturaServicio.obtenerCabeceraFacturaPorId(servicio_id);
     }
+
+
 
 }

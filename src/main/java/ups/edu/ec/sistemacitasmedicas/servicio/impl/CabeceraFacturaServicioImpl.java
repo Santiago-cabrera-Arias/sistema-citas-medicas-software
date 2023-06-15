@@ -9,7 +9,6 @@ import ups.edu.ec.sistemacitasmedicas.servicio.CabeceraFacturaServicio;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class CabeceraFacturaServicioImpl implements CabeceraFacturaServicio {
@@ -42,5 +41,10 @@ public class CabeceraFacturaServicioImpl implements CabeceraFacturaServicio {
         Optional<CabeceraFactura> cabeceraFacturaOptional = cabeceraFacturaRepositorio.findById(cabeceraFactura_id);
         return cabeceraFacturaOptional.orElse(null);
 
+    }
+
+    @Override
+    public Optional<CabeceraFactura> get(Integer id) {
+        return cabeceraFacturaRepositorio.findById(id);
     }
 }
