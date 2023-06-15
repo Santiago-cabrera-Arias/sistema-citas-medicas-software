@@ -56,7 +56,30 @@ public class UsuarioControlador {
             return "Credenciales de inicio de sesión inválidas";
         }
     }
+    @PutMapping("/{username}")
+    public Usuario actualizarUsuario(@PathVariable("username") String username, @RequestBody Usuario usuario) throws Exception {
+        // Verificar si el usuario existe en la base de datos
+        Usuario usuarioExistente = usuarioServicio.obtenerUsuario(username);
+        if (usuarioExistente == null) {
+            throw new Exception("Usuario no encontrado");
+        }
 
+        // Obtener la Persona por su ID
+        Persona persona = personaRepositorio.findById(usuario.getPersona().getPersona_id())
+                .orElseThrow(() -> new Exception("Persona no encontrada"));
+
+        // Actualizar los datos del usuario existente
+        usuarioExistente.setEncargo(usuario.getEncargo());
+        usuarioExistente.setUsername(usuario.getUsername());
+        usuarioExistente.setPassword(usuario.getPassword());
+        usuarioExistente.setEstado(usuario.isEstado());
+        usuarioExistente.setGeneral(usuario.isGeneral());
+        usuarioExistente.setAdministrador(usuario.isAdministrador());
+        usuarioExistente.setPersona(persona);
+
+        // Guardar los cambios en la base de datos
+        return usuarioServicio.guardarUsuario(usuarioExistente);
+    }
 
 
 

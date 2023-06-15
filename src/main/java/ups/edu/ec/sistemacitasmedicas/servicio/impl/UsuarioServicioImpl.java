@@ -41,4 +41,30 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public void eliminarUsuario(Integer id) {
         usuarioRepositorio.deleteById(id);
     }
+
+    public Usuario actualizarUsuario(Usuario usuario) throws Exception {
+        // Verificar si el usuario existe en la base de datos
+        Optional<Usuario> usuarioExistente = usuarioRepositorio.findByUsername(usuario.getUsername());
+        if (!usuarioExistente.isPresent()) {
+            throw new Exception("Usuario no encontrado");
+        }
+
+        // Obtener la Persona por su ID
+        Persona persona = personaRepositorio.findById(usuario.getPersona().getPersona_id())
+                .orElseThrow(() -> new Exception("Persona no encontrada"));
+
+        // Actualizar los datos del usuario existente
+        Usuario usuarioActualizado = usuarioExistente.get();
+        usuarioActualizado.setEncargo(usuario.getEncargo());
+        usuarioActualizado.setUsername(usuario.getUsername());
+        usuarioActualizado.setPassword(usuario.getPassword());
+        usuarioActualizado.setEstado(usuario.isEstado());
+        usuarioActualizado.setGeneral(usuario.isGeneral());
+        usuarioActualizado.setAdministrador(usuario.isAdministrador());
+        usuarioActualizado.setPersona(persona);
+
+        // Guardar los cambios en la base de datos
+        return usuarioRepositorio.save(usuarioActualizado);
+    }
+
 }
