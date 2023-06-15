@@ -1,6 +1,10 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "medico")
@@ -16,6 +20,10 @@ public class Medico {
 
     @ManyToOne
     private Especialidad especialidad;
+
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<Cita> medicoCita = new ArrayList<>();
 
     public Medico() {
     }
@@ -50,5 +58,13 @@ public class Medico {
 
     public void setEspecialidad(Especialidad especialidad) {
         this.especialidad = especialidad;
+    }
+
+    public List<Cita> getMedicoCita() {
+        return medicoCita;
+    }
+
+    public void setMedicoCita(List<Cita> medicoCita) {
+        this.medicoCita = medicoCita;
     }
 }

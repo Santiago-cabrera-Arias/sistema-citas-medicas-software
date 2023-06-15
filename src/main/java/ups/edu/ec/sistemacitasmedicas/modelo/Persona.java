@@ -36,11 +36,12 @@ public class Persona implements Serializable {
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     List<CabeceraFactura> cabeceraFacturas = new ArrayList<>();
-
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     @JsonIgnore
     List<Medico> medicoEspecialidades = new ArrayList<>();
-
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<Cita> medicoCita = new ArrayList<>();
 
     // Constructores
     public Persona() {

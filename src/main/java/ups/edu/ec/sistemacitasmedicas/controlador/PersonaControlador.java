@@ -66,30 +66,5 @@ public class PersonaControlador  {
         }
     }
 
-    @PostMapping("/guardarMedicoEspecialidad/{especialidad_id}/{telefonoConsultorio}")
-    public Persona guardarMedicoEspecialidad(@RequestBody Persona persona,
-                                             @PathVariable("especialidad_id") Integer especialidad_id,
-                                             @PathVariable("telefonoConsultorio") String telefonoConsultorio ) throws Exception {
-
-
-        List<Medico> personaMedico = new ArrayList<>();
-        Especialidad especialidad = new Especialidad();
-        Optional<Especialidad> especialidadOptional = especialidadServicio.get(especialidad_id);
-
-        especialidad.setEspecialidad_id(especialidadOptional.get().getEspecialidad_id());
-        especialidad.setEspecialidad(especialidadOptional.get().getEspecialidad());
-
-        Medico medico = new Medico();
-        medico.setPersona(persona);
-        medico.setTelenoConsultorio(telefonoConsultorio);
-        medico.setEspecialidad(especialidad);
-
-        personaMedico.add(medico);
-
-        return personaServicio.guardarMedicoEspecialidad(persona,personaMedico);
-
-    }
-
-
-    }
+}
 
