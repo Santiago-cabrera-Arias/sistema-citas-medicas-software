@@ -1,11 +1,16 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "medico")
-public class Medico extends Persona {
+public class Medico implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,20 +18,27 @@ public class Medico extends Persona {
     private String telenoConsultorio;
 
     @ManyToOne
-    @JoinColumn(name = "medico_id")
+    @JoinColumn(name = "MedicoId")
     private Medico medico;
     @ManyToOne
     @JoinColumn(name = "especialidad_id")
     private Especialidades especialidad;
 
-    public Medico(Long id, String cedula, String nombre, String apellido, String direccion, String telefono, String correo, String estado, String fechaNacimiento, String sexo, String tipo, boolean esCliente, boolean esMedico, boolean esEmpleado) {
-        super(Math.toIntExact(id), cedula, nombre, apellido, direccion, telefono, correo, estado, fechaNacimiento, sexo, tipo, esCliente, esMedico, esEmpleado);
+    @ManyToOne
+    @JoinColumn(name = "persona_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Persona persona;
+
+    public Persona getPersona() {
+        return persona;
     }
 
-
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
 
     public Medico() {
-        super();
+
     }
 
     public Long getMedicoId() {
