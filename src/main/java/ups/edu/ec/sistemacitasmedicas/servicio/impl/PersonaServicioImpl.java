@@ -81,24 +81,6 @@ public class PersonaServicioImpl implements PersonaServicio {
     }
 
 
-    @Override
-    public Persona guardarMedicoEspecialidad(Persona persona, List<Medico> medicoEspecialidades) throws Exception {
-
-        Persona personaLocal = personaRepositorio.findByCedula(persona.getCedula());
-
-        if (personaLocal != null){
-            throw new Exception("El usuario ya esta presente...");
-        }else {
-
-            for (Medico medicoEspecialidad:medicoEspecialidades){
-                especialidadRepositorio.save(medicoEspecialidad.getEspecialidad());
-            }
-            persona.getMedicoEspecialidades().addAll(medicoEspecialidades);
-            personaLocal = personaRepositorio.save(persona);
-
-        }
-        return  personaLocal;
-    }
 
 }
 

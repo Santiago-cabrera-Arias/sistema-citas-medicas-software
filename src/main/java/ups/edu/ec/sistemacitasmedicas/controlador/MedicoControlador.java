@@ -6,6 +6,7 @@ import ups.edu.ec.sistemacitasmedicas.modelo.Especialidad;
 import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.servicio.EspecialidadServicio;
+import ups.edu.ec.sistemacitasmedicas.servicio.MedicioServicio;
 import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
 
 import java.util.ArrayList;
@@ -23,27 +24,38 @@ public class MedicoControlador {
     @Autowired
     EspecialidadServicio especialidadServicio;
 
-    @PostMapping("/guardarMedicoEspecialidad/{especialidad_id}/{telefonoConsultorio}")
-    public Persona guardarMedicoEspecialidad(@RequestBody Persona persona,
-                                             @PathVariable("especialidad_id") Integer especialidad_id,
-                                             @PathVariable("telefonoConsultorio") String telefonoConsultorio ) throws Exception {
+    @Autowired
+    MedicioServicio medicioServicio;
+
+    @PostMapping("/guardarMedicoEspecialidad/{persona_id}/{especialidad_id}")
+    public Medico guardarMedicoEspecialidad(@PathVariable("persona_id") Integer persona_id,
+                                            @PathVariable("especialidad_id") Integer especialidad_id,
+                                            @RequestBody Medico medico) throws Exception {
 
 
-        List<Medico> personaMedico = new ArrayList<>();
+        List<Medico> medicoEspecialidad = new ArrayList<>();
         Especialidad especialidad = new Especialidad();
         Optional<Especialidad> especialidadOptional = especialidadServicio.get(especialidad_id);
+        Persona persona = new Persona();
+        Optional<Persona> personaOptional = personaServicio.get(persona_id);
 
+        persona.setPersona_id(personaOptional.get().getPersona_id());
         especialidad.setEspecialidad_id(especialidadOptional.get().getEspecialidad_id());
-        especialidad.setEspecialidad(especialidadOptional.get().getEspecialidad());
 
-        Medico medico = new Medico();
+        if (!personaOptional.isPresent()) {
+            throw new Exception("La persona no existe");
+        }
+
+        if (!especialidadOptional.isPresent()) {
+            throw new Exception("La especialidad no existe");
+        }
+
         medico.setPersona(persona);
-        medico.setTelenoConsultorio(telefonoConsultorio);
         medico.setEspecialidad(especialidad);
 
-        personaMedico.add(medico);
+        medicoEspecialidad.add(medico);
 
-        return personaServicio.guardarMedicoEspecialidad(persona,personaMedico);
+        return medicioServicio.guardarMedicoEspecialidad(medico,medicoEspecialidad);
 
     }
 

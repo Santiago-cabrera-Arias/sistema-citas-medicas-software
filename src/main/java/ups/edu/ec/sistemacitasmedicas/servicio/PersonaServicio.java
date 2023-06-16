@@ -16,7 +16,6 @@ public interface PersonaServicio {
 
     Optional<Persona> get(Integer id);
 
-    public Persona guardarMedicoEspecialidad(Persona persona, List<Medico> medicoEspecialidades) throws Exception;
 
 
 
