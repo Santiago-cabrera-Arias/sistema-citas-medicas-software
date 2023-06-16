@@ -1,5 +1,6 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.sql.Time;
@@ -12,6 +13,7 @@ public class Cita {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cita_id;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date fechaCita;
     private Time hora;
     private boolean estado = false;

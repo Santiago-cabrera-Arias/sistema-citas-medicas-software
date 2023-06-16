@@ -206,6 +206,14 @@ public class Persona implements Serializable {
         this.medicoEspecialidades = medicoEspecialidades;
     }
 
+    public List<Cita> getMedicoCita() {
+        return medicoCita;
+    }
+
+    public void setMedicoCita(List<Cita> medicoCita) {
+        this.medicoCita = medicoCita;
+    }
+
     public void asignarRolesPorTipo() {
         switch (tipo) {
             case "Cliente":
