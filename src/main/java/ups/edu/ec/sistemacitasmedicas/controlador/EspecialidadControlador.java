@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ups.edu.ec.sistemacitasmedicas.modelo.Especialidad;
 import ups.edu.ec.sistemacitasmedicas.servicio.EspecialidadServicio;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/especialidad")
 @CrossOrigin("*")

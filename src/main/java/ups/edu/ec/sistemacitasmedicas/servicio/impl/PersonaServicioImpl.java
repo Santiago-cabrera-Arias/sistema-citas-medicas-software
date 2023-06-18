@@ -28,18 +28,30 @@ public class PersonaServicioImpl implements PersonaServicio {
         return personaOptional.orElse(null);
     }
 
+//    public Persona crearPersona(Persona persona) {
+//        // Verificar si ya existe una persona con la misma cédula
+//        Persona personaExistente = personaRepositorio.findByCedula(persona.getCedula());
+//        if (personaExistente.equals(persona.getCedula())) {
+//            throw new PersonaExistenteException("Ya existe una persona con la misma cédula.");
+//        }
+//        // Asignar roles por tipo
+//        persona.asignarRolesPorTipo();
+//
+//        return personaRepositorio.save(persona);
+//    }
+
     public Persona crearPersona(Persona persona) {
         // Verificar si ya existe una persona con la misma cédula
         Persona personaExistente = personaRepositorio.findByCedula(persona.getCedula());
-        if (personaExistente.equals(persona.getCedula())) {
+        if (personaExistente != null && personaExistente.equals(persona.getCedula())) {
             throw new PersonaExistenteException("Ya existe una persona con la misma cédula.");
         }
+
         // Asignar roles por tipo
         persona.asignarRolesPorTipo();
 
         return personaRepositorio.save(persona);
     }
-
 
     public void eliminarPersona(Integer id) {
         Optional<Persona> personaOptional = personaRepositorio.findById(id);

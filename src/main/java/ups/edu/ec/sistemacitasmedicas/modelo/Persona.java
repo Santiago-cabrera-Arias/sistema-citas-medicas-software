@@ -48,8 +48,7 @@ public class Persona implements Serializable {
         // Constructor sin argumentos
     }
     public Persona(Integer persona_id, String cedula, String nombre, String apellido, String direccion, String telefono,
-                   String correo, String estado, String fechaNacimiento, String sexo, String tipo, boolean esCliente,
-                   boolean esMedico, boolean esEmpleado) {
+                   String correo, String estado, String fechaNacimiento, String sexo, String tipo) {
         this.persona_id = persona_id;
         this.cedula = cedula;
         this.nombre = nombre;
@@ -61,9 +60,20 @@ public class Persona implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
         this.sexo = sexo;
         this.tipo = tipo;
-        this.esCliente = esCliente;
-        this.esMedico = esMedico;
-        this.esEmpleado = esEmpleado;
+    }
+
+    public Persona(String cedula, String nombre, String apellido, String direccion, String telefono,
+                   String correo, String estado, String fechaNacimiento, String sexo, String tipo) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.estado = estado;
+        this.fechaNacimiento = fechaNacimiento;
+        this.sexo = sexo;
+        this.tipo = tipo;
     }
 
 
