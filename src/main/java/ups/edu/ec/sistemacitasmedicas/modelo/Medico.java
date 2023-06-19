@@ -1,5 +1,6 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
+<<<<<<< HEAD
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -28,6 +29,51 @@ public class Medico implements Serializable {
     @JoinColumn(name = "persona_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Persona persona;
+=======
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "medico")
+public class Medico {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer medico_id;
+    private String telenoConsultorio;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Persona persona;
+
+    @ManyToOne
+    private Especialidad especialidad;
+
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<Cita> medicoCita = new ArrayList<>();
+
+    public Medico() {
+    }
+
+    public Integer getMedico_id() {
+        return medico_id;
+    }
+
+    public void setMedico_id(Integer medico_id) {
+        this.medico_id = medico_id;
+    }
+
+    public String getTelenoConsultorio() {
+        return telenoConsultorio;
+    }
+
+    public void setTelenoConsultorio(String telenoConsultorio) {
+        this.telenoConsultorio = telenoConsultorio;
+    }
+>>>>>>> main
 
     public Persona getPersona() {
         return persona;
@@ -37,6 +83,7 @@ public class Medico implements Serializable {
         this.persona = persona;
     }
 
+<<<<<<< HEAD
     public Medico() {
 
     }
@@ -76,4 +123,21 @@ public class Medico implements Serializable {
     public void setEspecialidad(Especialidades especialidad) {
         this.especialidad = especialidad;
     }
+=======
+    public Especialidad getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public List<Cita> getMedicoCita() {
+        return medicoCita;
+    }
+
+    public void setMedicoCita(List<Cita> medicoCita) {
+        this.medicoCita = medicoCita;
+    }
+>>>>>>> main
 }

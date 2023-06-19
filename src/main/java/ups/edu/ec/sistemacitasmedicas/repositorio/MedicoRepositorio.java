@@ -2,6 +2,7 @@ package ups.edu.ec.sistemacitasmedicas.repositorio;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
+<<<<<<< HEAD
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.modelo.Usuario;
 
@@ -13,4 +14,8 @@ public interface MedicoRepositorio extends JpaRepository<Medico,Integer> {
 
 
 
+=======
+
+public interface MedicoRepositorio extends JpaRepository<Medico,Integer> {
+>>>>>>> main
 }

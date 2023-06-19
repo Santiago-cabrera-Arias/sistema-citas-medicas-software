@@ -37,15 +37,19 @@ public class Persona implements Serializable {
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     List<CabeceraFactura> cabeceraFacturas = new ArrayList<>();
-
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<Medico> medicoEspecialidades = new ArrayList<>();
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<Cita> medicoCita = new ArrayList<>();
 
     // Constructores
     public Persona() {
         // Constructor sin argumentos
     }
     public Persona(Integer persona_id, String cedula, String nombre, String apellido, String direccion, String telefono,
-                   String correo, String estado, String fechaNacimiento, String sexo, String tipo, boolean esCliente,
-                   boolean esMedico, boolean esEmpleado) {
+                   String correo, String estado, String fechaNacimiento, String sexo, String tipo) {
         this.persona_id = persona_id;
         this.cedula = cedula;
         this.nombre = nombre;
@@ -57,9 +61,20 @@ public class Persona implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
         this.sexo = sexo;
         this.tipo = tipo;
-        this.esCliente = esCliente;
-        this.esMedico = esMedico;
-        this.esEmpleado = esEmpleado;
+    }
+
+    public Persona(String cedula, String nombre, String apellido, String direccion, String telefono,
+                   String correo, String estado, String fechaNacimiento, String sexo, String tipo) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.estado = estado;
+        this.fechaNacimiento = fechaNacimiento;
+        this.sexo = sexo;
+        this.tipo = tipo;
     }
 
 
@@ -192,6 +207,22 @@ public class Persona implements Serializable {
 
     public void setCabeceraFacturas(List<CabeceraFactura> cabeceraFacturas) {
         this.cabeceraFacturas = cabeceraFacturas;
+    }
+
+    public List<Medico> getMedicoEspecialidades() {
+        return medicoEspecialidades;
+    }
+
+    public void setMedicoEspecialidades(List<Medico> medicoEspecialidades) {
+        this.medicoEspecialidades = medicoEspecialidades;
+    }
+
+    public List<Cita> getMedicoCita() {
+        return medicoCita;
+    }
+
+    public void setMedicoCita(List<Cita> medicoCita) {
+        this.medicoCita = medicoCita;
     }
 
     public void asignarRolesPorTipo() {

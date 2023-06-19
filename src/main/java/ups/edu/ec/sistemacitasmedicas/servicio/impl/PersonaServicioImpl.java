@@ -3,12 +3,15 @@ package ups.edu.ec.sistemacitasmedicas.servicio.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
+import ups.edu.ec.sistemacitasmedicas.repositorio.EspecialidadRepositorio;
 import ups.edu.ec.sistemacitasmedicas.repositorio.PersonaRepositorio;
 import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaExistenteException;
 import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaNoEncontradaException;
 import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,23 +20,38 @@ public class PersonaServicioImpl implements PersonaServicio {
     @Autowired
     private PersonaRepositorio personaRepositorio;
 
+    @Autowired
+    private EspecialidadRepositorio especialidadRepositorio;
+
     public Persona obtenerPersonaPorId(Integer persona_id) {
         Optional<Persona> personaOptional = personaRepositorio.findById(persona_id);
         return personaOptional.orElse(null);
     }
 
+//    public Persona crearPersona(Persona persona) {
+//        // Verificar si ya existe una persona con la misma cédula
+//        Persona personaExistente = personaRepositorio.findByCedula(persona.getCedula());
+//        if (personaExistente.equals(persona.getCedula())) {
+//            throw new PersonaExistenteException("Ya existe una persona con la misma cédula.");
+//        }
+//        // Asignar roles por tipo
+//        persona.asignarRolesPorTipo();
+//
+//        return personaRepositorio.save(persona);
+//    }
+
     public Persona crearPersona(Persona persona) {
         // Verificar si ya existe una persona con la misma cédula
-        Optional<Persona> personaExistente = personaRepositorio.findByCedula(persona.getCedula());
-        if (personaExistente.equals(persona.getCedula())) {
+        Persona personaExistente = personaRepositorio.findByCedula(persona.getCedula());
+        if (personaExistente != null && personaExistente.equals(persona.getCedula())) {
             throw new PersonaExistenteException("Ya existe una persona con la misma cédula.");
         }
+
         // Asignar roles por tipo
         persona.asignarRolesPorTipo();
 
         return personaRepositorio.save(persona);
     }
-
 
     public void eliminarPersona(Integer id) {
         Optional<Persona> personaOptional = personaRepositorio.findById(id);
@@ -44,6 +62,7 @@ public class PersonaServicioImpl implements PersonaServicio {
     public Optional<Persona> get(Integer persona_id) {
         return personaRepositorio.findById(persona_id);
     }
+
 
     public Persona actualizarPersona(Persona persona) {
         // Verificar si la persona existe en la base de datos
@@ -72,6 +91,7 @@ public class PersonaServicioImpl implements PersonaServicio {
         // Guardar los cambios en la base de datos
         return personaRepositorio.save(personaActualizada);
     }
+
 
 
 }

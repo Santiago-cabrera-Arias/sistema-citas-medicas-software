@@ -6,7 +6,7 @@ import java.util.Optional;
 
 
 public interface PersonaRepositorio extends JpaRepository<Persona,Integer> {
-    Optional<Persona> findByCedula(String cedula);
+    Persona findByCedula(String cedula);
     Optional<Persona> findById(Integer persona_id);
 
 }

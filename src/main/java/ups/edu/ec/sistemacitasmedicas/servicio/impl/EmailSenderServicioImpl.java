@@ -6,7 +6,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import ups.edu.ec.sistemacitasmedicas.servicio.EmailSenderServicio;
 
-import java.io.File;
 
 @Service
 public class EmailSenderServicioImpl implements EmailSenderServicio {

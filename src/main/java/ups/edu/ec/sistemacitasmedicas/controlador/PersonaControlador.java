@@ -2,10 +2,16 @@ package ups.edu.ec.sistemacitasmedicas.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ups.edu.ec.sistemacitasmedicas.modelo.Especialidad;
+import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaNoEncontradaException;
+import ups.edu.ec.sistemacitasmedicas.servicio.EspecialidadServicio;
 import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -15,6 +21,9 @@ public class PersonaControlador  {
 
     @Autowired
     PersonaServicio personaServicio;
+
+    @Autowired
+    EspecialidadServicio especialidadServicio;
 
 
     @PostMapping("/registrar")
@@ -57,7 +66,6 @@ public class PersonaControlador  {
             throw new PersonaNoEncontradaException("No se encontró la persona a actualizar.");
         }
     }
-
 
 }
 
