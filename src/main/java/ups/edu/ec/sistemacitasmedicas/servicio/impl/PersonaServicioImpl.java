@@ -7,6 +7,7 @@ import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaExistenteException;
 import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaNoEncontradaException;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.repositorio.PersonaRepositorio;
+import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
 
 import java.util.Optional;
 

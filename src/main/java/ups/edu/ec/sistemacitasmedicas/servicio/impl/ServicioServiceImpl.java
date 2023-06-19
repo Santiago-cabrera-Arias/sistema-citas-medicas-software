@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ups.edu.ec.sistemacitasmedicas.modelo.Servicio;
 import ups.edu.ec.sistemacitasmedicas.repositorio.ServicioRepositorio;
+import ups.edu.ec.sistemacitasmedicas.servicio.ServicioService;
 
 import java.util.List;
 import java.util.Optional;
