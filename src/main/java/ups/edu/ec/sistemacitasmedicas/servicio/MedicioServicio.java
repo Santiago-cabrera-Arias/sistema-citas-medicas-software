@@ -1,8 +1,6 @@
 package ups.edu.ec.sistemacitasmedicas.servicio;
 
-import ups.edu.ec.sistemacitasmedicas.modelo.Cita;
 import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
-import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,22 +1,18 @@
 package ups.edu.ec.sistemacitasmedicas.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import ups.edu.ec.sistemacitasmedicas.modelo.CabeceraFactura;
 import ups.edu.ec.sistemacitasmedicas.modelo.DetalleFactura;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.modelo.Servicio;
 import ups.edu.ec.sistemacitasmedicas.servicio.*;
 
-
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @RestController

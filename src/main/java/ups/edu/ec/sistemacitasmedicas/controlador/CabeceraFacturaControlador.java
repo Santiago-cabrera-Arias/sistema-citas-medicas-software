@@ -14,7 +14,7 @@ import ups.edu.ec.sistemacitasmedicas.servicio.DetalleFacturaServicio;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cabeceraFacturaControlador")
+@RequestMapping("/cabeceraFactura")
 @CrossOrigin("*")
 public class CabeceraFacturaControlador {
     @Autowired

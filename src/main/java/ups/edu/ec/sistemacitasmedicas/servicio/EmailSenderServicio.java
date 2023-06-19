@@ -1,6 +1,5 @@
 package ups.edu.ec.sistemacitasmedicas.servicio;
 
-import java.io.File;
 
 public interface EmailSenderServicio {
 

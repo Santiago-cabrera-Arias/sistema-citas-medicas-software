@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import ups.edu.ec.sistemacitasmedicas.modelo.Usuario;
 import ups.edu.ec.sistemacitasmedicas.repositorio.UsuarioRepositorio;
 
 import java.util.List;

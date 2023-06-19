@@ -17,6 +17,12 @@ public class Especialidad {
     @OneToMany(mappedBy = "especialidad", cascade = CascadeType.ALL)
     List<Medico> medicoEspecialidades = new ArrayList<>();
 
+
+    public Especialidad(Integer especialidad_id, String especialidad) {
+        this.especialidad_id = especialidad_id;
+        this.especialidad = especialidad;
+    }
+
     public Especialidad() {
     }
 

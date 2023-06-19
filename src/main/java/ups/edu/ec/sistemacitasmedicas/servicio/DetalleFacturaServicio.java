@@ -1,6 +1,5 @@
 package ups.edu.ec.sistemacitasmedicas.servicio;
 
-import ups.edu.ec.sistemacitasmedicas.modelo.CabeceraFactura;
 import ups.edu.ec.sistemacitasmedicas.modelo.DetalleFactura;
 
 import java.util.List;

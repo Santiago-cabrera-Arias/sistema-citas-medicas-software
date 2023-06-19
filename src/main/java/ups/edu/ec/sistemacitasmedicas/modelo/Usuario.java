@@ -1,12 +1,9 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
@@ -32,6 +29,17 @@ public class Usuario implements Serializable {
 
     public Usuario() {
     }
+
+    public Usuario(Integer usuario_id, String encargo, String username, String password, boolean estado) {
+        this.usuario_id = usuario_id;
+        this.encargo = encargo;
+        this.username = username;
+        this.password = password;
+        this.estado = estado;
+
+    }
+
+
 
     public Integer getUsuario_id() {
         return usuario_id;

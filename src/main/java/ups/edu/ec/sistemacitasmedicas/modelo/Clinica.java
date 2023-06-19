@@ -21,6 +21,14 @@ public class Clinica {
     public Clinica() {
     }
 
+    public Clinica(Integer clinica_id, String prescripciones, String ordenes, String certificados) {
+        this.clinica_id = clinica_id;
+        this.prescripciones = prescripciones;
+        this.ordenes = ordenes;
+        this.certificados = certificados;
+    }
+
+
 
     public Integer getClinica_id() {
         return clinica_id;

@@ -1,17 +1,12 @@
 package ups.edu.ec.sistemacitasmedicas.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ups.edu.ec.sistemacitasmedicas.modelo.Especialidad;
-import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
-import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaNoEncontradaException;
-import ups.edu.ec.sistemacitasmedicas.servicio.EspecialidadServicio;
+import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -22,13 +17,12 @@ public class PersonaControlador  {
     @Autowired
     PersonaServicio personaServicio;
 
-    @Autowired
-    EspecialidadServicio especialidadServicio;
-
 
     @PostMapping("/registrar")
-    public Persona guardarPersona(@RequestBody Persona persona) throws Exception{
-        return personaServicio.crearPersona(persona);
+    public ResponseEntity<Persona> registrarPersona(@RequestBody Persona persona) {
+        // Lógica para guardar la persona
+        Persona personaGuardada = personaServicio.crearPersona(persona);
+        return ResponseEntity.status(HttpStatus.CREATED).body(personaGuardada);
     }
 
     @GetMapping("/{persona_id}")
@@ -36,10 +30,9 @@ public class PersonaControlador  {
         return personaServicio.obtenerPersonaPorId(persona_id);
     }
 
-
-    @DeleteMapping("/{persona_id}")
-    public void eliminarPersona(@PathVariable Integer persona_id) {
-        personaServicio.eliminarPersona(persona_id);
+    @DeleteMapping("/{id}")
+    public void eliminarPersona(@PathVariable Integer id) {
+        personaServicio.eliminarPersona(id);
     }
 
     // Actualizar una persona existente

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +37,17 @@ public class CabeceraFactura {
 
     public CabeceraFactura() {
     }
+
+    public CabeceraFactura(Integer cabeceraFactura_id, String fechaString, double subtotal, double totalIva, double totalFactura, boolean estado) throws ParseException {
+        this.cabeceraFactura_id = cabeceraFactura_id;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        this.fecha = dateFormat.parse(fechaString);
+        this.subtotal = subtotal;
+        this.totalIva = totalIva;
+        this.totalFactura = totalFactura;
+        this.estado = estado;
+    }
+
 
     public Integer getCabeceraFactura_id() {
         return cabeceraFactura_id;

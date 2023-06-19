@@ -23,6 +23,14 @@ public class DetalleFactura {
     @JoinColumn(name = "servicio_id")
     private Servicio servicio;
 
+    public DetalleFactura(Integer detalleFactura_id, String nombre, int cantidad, double precioUnitario, double total) {
+        this.detalleFactura_id = detalleFactura_id;
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
+        this.total = total;
+    }
+
     public DetalleFactura() {
     }
 

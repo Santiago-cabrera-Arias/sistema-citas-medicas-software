@@ -1,13 +1,13 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "personas")
@@ -16,7 +16,6 @@ public class Persona implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer persona_id;
-    @Column(unique = true)
     private String cedula;
     private String nombre;
     private String apellido;
@@ -28,6 +27,7 @@ public class Persona implements Serializable {
     private String sexo;
     private String tipo;
 
+
     // Roles
     private boolean esCliente = false;
     private boolean esMedico = false;
@@ -36,6 +36,7 @@ public class Persona implements Serializable {
     private Set<Usuario> usuarios = new HashSet<>();
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    @JsonIgnore
     List<CabeceraFactura> cabeceraFacturas = new ArrayList<>();
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     @JsonIgnore
