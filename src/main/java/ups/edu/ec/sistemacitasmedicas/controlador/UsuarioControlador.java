@@ -20,6 +20,9 @@ public class UsuarioControlador {
     @Autowired
     private PersonaServicio personaServicio;
 
+    public UsuarioControlador(UsuarioServicio usuarioServicio) {
+    }
+
     @PostMapping("/registrar")
     public ResponseEntity<Usuario> guardarUsuario(@RequestBody Usuario usuario) throws Exception {
         Optional<Persona> persona = personaServicio.get(usuario.getPersona().getPersona_id());
@@ -88,6 +91,8 @@ public class UsuarioControlador {
         // Guardar los cambios en la base de datos
         return usuarioServicio.guardarUsuario(usuarioExistente);
     }
+
+    
 
 
 
