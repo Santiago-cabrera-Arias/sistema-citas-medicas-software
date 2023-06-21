@@ -191,15 +191,29 @@ public class UsuarioControladorTest {
 
     @Test
     public void testEliminarUsuario() throws Exception {
-        // Configurar el controlador
-        UsuarioControlador usuarioController = new UsuarioControlador(usuarioServicio);
-        mockMvc = MockMvcBuilders.standaloneSetup(usuarioController).build();
 
-        // Simular el comportamiento del servicio de usuario
-        doNothing().when(usuarioServicio).eliminarUsuario(anyInt());
+        int id = 3;
 
-        // Realizar la solicitud DELETE
-        mockMvc.perform(MockMvcRequestBuilders.delete("/usuarios/{usuarioId}", 1))
-                .andExpect(status().isOk());
+        // Simula la eliminación exitosa del usuario sin devolver ningún valor
+        doNothing().when(usuarioServicio).eliminarUsuario(id);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/usuarios/{usuarioId}", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
     }
+
+
+        //        // Configurar el controlador
+//        UsuarioControlador usuarioController = new UsuarioControlador(usuarioServicio);
+//        mockMvc = MockMvcBuilders.standaloneSetup(usuarioController).build();
+//
+//        // Simular el comportamiento del servicio de usuario
+//        doNothing().when(usuarioServicio).eliminarUsuario(anyInt());
+//
+//        // Realizar la solicitud DELETE
+//        mockMvc.perform(MockMvcRequestBuilders.delete("/usuarios/{usuarioId}", 7))
+//                .andExpect(status().isOk());
+//    }
 }
