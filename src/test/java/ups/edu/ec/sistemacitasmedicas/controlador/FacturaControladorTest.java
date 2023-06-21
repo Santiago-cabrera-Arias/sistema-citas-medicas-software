@@ -93,7 +93,6 @@ public class FacturaControladorTest {
         // Verificar los resultados
         result.andDo(print());
 
-        // Aquí puedes agregar más verificaciones según tus necesidades
     }
 
 
@@ -114,8 +113,6 @@ public class FacturaControladorTest {
 
         // Verificar los resultados
         result.andDo(print());
-
-        // Aquí puedes agregar más verificaciones según tus necesidades
     }
 
 
