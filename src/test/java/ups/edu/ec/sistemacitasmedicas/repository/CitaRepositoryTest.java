@@ -36,9 +36,7 @@ public class CitaRepositoryTest {
         LocalTime hora = LocalTime.of(9, 30); // Hora específica: 09:30 AM
         boolean estado = false;
 
-        Date fechaCitaDate = java.sql.Date.valueOf(fechaCita); // Convertir LocalDate a java.sql.Date
-
-        Cita cita = new Cita(cita_id, fechaCitaDate, Time.valueOf(hora), estado);
+        Cita cita = new Cita(cita_id, fechaCita, hora, estado);
         Cita citaGuardada = citaRepositorio.save(cita);
 
         Assertions.assertNotNull(citaGuardada);
@@ -47,40 +45,39 @@ public class CitaRepositoryTest {
 
 
 
-   @Test
+
+
+    @Test
     void testObtenerCitaPorId() {
-       Integer cita_id = 11;
-       LocalDate fechaCita = LocalDate.of(2023, 6, 17); // Fecha específica: 17 de junio de 2023
-       LocalTime hora = LocalTime.of(9, 30); // Hora específica: 09:30 AM
-       boolean estado = false;
+        Integer cita_id = 3;
+        LocalDate fechaCita = LocalDate.of(2023, 6, 17); // Fecha específica: 17 de junio de 2023
+        LocalTime hora = LocalTime.of(9, 30); // Hora específica: 09:30 AM
+        boolean estado = false;
 
-       Date fechaCitaDate = java.sql.Date.valueOf(fechaCita); // Convertir LocalDate a java.sql.Date
+        Cita cita = new Cita(cita_id, fechaCita, hora, estado);
+        citaRepositorio.save(cita);
 
-       Cita cita = new Cita(cita_id, fechaCitaDate, Time.valueOf(hora), estado);
-       citaRepositorio.save(cita);
+        Optional<Cita> citaObtenidaOptional = citaRepositorio.findById(cita_id);
 
-        Optional<Cita> personaObtenidaOptional = citaRepositorio.findById(11);
-
-        // Verificar que la persona obtenida no sea nula
-        Assertions.assertNotNull(personaObtenidaOptional);
+        // Verificar que la cita obtenida no sea nula
+        Assertions.assertTrue(citaObtenidaOptional.isPresent());
 
         // Verificar si el Optional contiene un valor antes de acceder a él
-       if (personaObtenidaOptional.isPresent()) {
-           Cita citaObtenida = personaObtenidaOptional.get();
+        if (citaObtenidaOptional.isPresent()) {
+            Cita citaObtenida = citaObtenidaOptional.get();
 
-           // Verificar que la información de la cita obtenida coincida con la información de la cita de prueba
-           Assertions.assertEquals(cita.getCita_id(), citaObtenida.getCita_id());
-           Assertions.assertEquals(cita.getFechaCita(), citaObtenida.getFechaCita());
-           Assertions.assertEquals(cita.getHora(), citaObtenida.getHora());
-           Assertions.assertEquals(cita.isEstado(), citaObtenida.isEstado());
-
-       } else {
+            // Verificar que la información de la cita obtenida coincida con la información de la cita de prueba
+            Assertions.assertEquals(cita.getCita_id(), citaObtenida.getCita_id());
+            Assertions.assertEquals(cita.getFechaCita(), citaObtenida.getFechaCita());
+            Assertions.assertEquals(cita.getHora(), citaObtenida.getHora());
+            Assertions.assertEquals(cita.isEstado(), citaObtenida.isEstado());
+        } else {
             // Si el Optional está vacío, lanzar una excepción o realizar alguna otra acción según lo requieras
-
         }
-
-
     }
+
+
+
 
     @Test
     public void testListarCita(){
@@ -91,7 +88,7 @@ public class CitaRepositoryTest {
     @Test
     public void eliminarCitas(){
 
-        Integer id = 18;
+        Integer id = 3;
         boolean existe =  citaRepositorio.findById(id).isPresent();
         citaRepositorio.deleteById(id);
         boolean Noexiste =  citaRepositorio.findById(id).isPresent();
