@@ -23,6 +23,16 @@ public class Especialidad {
         this.especialidad = especialidad;
     }
 
+    public Especialidad(Integer especialidad_id, String especialidad, List<Medico> medicoEspecialidades) {
+        this.especialidad_id = especialidad_id;
+        this.especialidad = especialidad;
+        this.medicoEspecialidades = medicoEspecialidades;
+    }
+
+    public Especialidad(Integer especialidad_id) {
+        this.especialidad_id = especialidad_id;
+    }
+
     public Especialidad() {
     }
 

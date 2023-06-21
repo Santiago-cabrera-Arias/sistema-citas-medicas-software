@@ -31,6 +31,10 @@ public class Medico {
         this.telenoConsultorio= telenoConsultorio;
     }
 
+    public Medico(Integer medico_id) {
+        this.medico_id = medico_id;
+    }
+
     public Medico() {
     }
 
