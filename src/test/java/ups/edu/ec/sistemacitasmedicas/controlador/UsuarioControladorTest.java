@@ -72,7 +72,6 @@ public class UsuarioControladorTest {
         // Simula el comportamiento del servicio de usuario
         given(usuarioServicio.guardarUsuario(any(Usuario.class))).willReturn(usuario);
 
-        // Realiza la solicitud POST con el cuerpo del usuario en formato JSON
         mockMvc.perform(post("/usuarios/registrar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"usuario_id\":5,\"encargo\":\"General\",\"username\":\"sss\",\"password\":\"234\",\"estado\":true,\"persona\":{\"persona_id\":7}}"))
@@ -206,15 +205,4 @@ public class UsuarioControladorTest {
     }
 
 
-        //        // Configurar el controlador
-//        UsuarioControlador usuarioController = new UsuarioControlador(usuarioServicio);
-//        mockMvc = MockMvcBuilders.standaloneSetup(usuarioController).build();
-//
-//        // Simular el comportamiento del servicio de usuario
-//        doNothing().when(usuarioServicio).eliminarUsuario(anyInt());
-//
-//        // Realizar la solicitud DELETE
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/usuarios/{usuarioId}", 7))
-//                .andExpect(status().isOk());
-//    }
 }

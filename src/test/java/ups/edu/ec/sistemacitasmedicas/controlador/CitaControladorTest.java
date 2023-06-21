@@ -8,22 +8,27 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ups.edu.ec.sistemacitasmedicas.modelo.*;
 import ups.edu.ec.sistemacitasmedicas.servicio.CitaServicio;
-import ups.edu.ec.sistemacitasmedicas.servicio.ClinicaServicio;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.BDDMockito.given;
 import ups.edu.ec.sistemacitasmedicas.servicio.MedicioServicio;
 import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
+import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
-import static org.springframework.http.RequestEntity.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CitaControlador.class)
 public class CitaControladorTest {
@@ -38,67 +43,61 @@ public class CitaControladorTest {
     @MockBean
     private CitaServicio citaServicio;
 
-
     @Autowired
     private ObjectMapper objectMapper;
 
+
+    @Test
+    public void testGuardarCita() throws Exception {
+        // Datos de prueba
+        Cita cita = new Cita();
+        cita.setCita_id(1);
+        Integer medico_id = 1;
+        Integer persona_id = 1;
+        cita.setFechaCita(LocalDate.parse("2023-05-20"));
+        cita.setHora(LocalTime.parse("19:00"));
+        cita.setEstado(false);
+
+
+
+        // Simula el comportamiento del servicio de persona
+        // Simular el comportamiento del servicio
+        given(personaServicio.get(persona_id)).willReturn(Optional.of(new Persona()));
+        given(medicoServicio.get(medico_id)).willReturn(Optional.of(new Medico()));
+        given(citaServicio.guardarCitaMedico(any(Cita.class), anyList())).willReturn(cita);
+
+
+        // Realiza la solicitud POST con el cuerpo de la cita en formato JSON
+        ResultActions response= mockMvc.perform(post("/cita/crear/{medico_id}/{persona_id}", medico_id, persona_id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(cita))); // Proporcionar el contenido JSON completo de la clínica
+        response.andDo(print());
+    }
+
     /*@Test
-    public void testGuardarUsuario() throws Exception {
+    public void testGuardarClinica() throws Exception {
         // Datos de prueba
         Cita cita = new Cita();
         cita.setCita_id(1);
         cita.setFechaCita(LocalDate.parse("2023-05-20"));
         cita.setHora(LocalTime.parse("19:00"));
         cita.setEstado(false);
+        // ... Establecer otras propiedades de la clínica
 
-        Persona persona = new Persona();
-        persona.setPersona_id(1);
-        // Asigna la persona a la cita
-        cita.setPersona(persona);
-
-        Medico medico = new Medico();
-        medico.setMedico_id(1);
-        cita.setMedico(medico);
-
-        // Simula el comportamiento del servicio de persona
-        given(personaServicio.get(1)).willReturn(Optional.of(persona));
-        given(medicoServicio.get(1)).willReturn(Optional.of(medico));
-
-        // Simula el comportamiento del servicio de usuario
-        given(citaServicio.guardarCitaMedico(ArgumentMatchers.any(Cita.class),ArgumentMatchers.any(Medico.class)))
-                .willReturn(cita);
-
-
-
-
-        // Realiza la solicitud POST con el cuerpo de la cita en formato JSON
-        mockMvc.perform(MockMvcRequestBuilders.post("/usuarios/registrar")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"cita_id\":5,\"fechaCita\":\"2023-06-20\",\"hora\":\"19:00\",\"estado\":false,\"persona\":{\"persona_id\":1},\"medico\":{\"medico_id\":1}}"))
-                .andExpect(status().isOk());
-    }*/
-
-    /*@Test
-    public void testCrearCitaMedica() throws Exception {
-        // Datos de prueba
-        Integer medicoId = 1;
-        Integer personaId = 2;
-        Clinica clinica = new Clinica();
-        // Configurar los datos de la clínica según tus necesidades
-
-        // Simula el comportamiento del servicio de persona
+        // Simular el comportamiento del servicio
         given(personaServicio.get(personaId)).willReturn(Optional.of(new Persona()));
-
-        // Simula el comportamiento del servicio de médico
         given(medicoServicio.get(medicoId)).willReturn(Optional.of(new Medico()));
-
-        // Simula el comportamiento del servicio de clínica
         given(clinicaServicio.guardarprescripcion(any(Clinica.class), anyList())).willReturn(clinica);
 
-        // Realiza la solicitud POST con el cuerpo de la clínica en formato JSON
-        mockMvc.perform(post("/crear/{medico_id}/{persona_id}", medicoId, personaId)
-                        .contentType(MediaType.APPLICATION_JSON);
-                        //.content("{}")) // Puedes configurar el cuerpo de la clínica según tus necesidades
-                //.andExpect(status().isOk());
+        // Realizar la solicitud POST con el cuerpo de la clínica en formato JSON crear/{medico_id}/{persona_id}
+        ResultActions response= mockMvc.perform(post("/clinica/crear/{medico_id}/{persona_id}", medicoId, personaId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(clinica))); // Proporcionar el contenido JSON completo de la clínica
+        response.andDo(print());
+
     }*/
+
+
+
+
 }
