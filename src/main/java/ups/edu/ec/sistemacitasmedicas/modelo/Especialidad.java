@@ -1,5 +1,6 @@
 package ups.edu.ec.sistemacitasmedicas.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -13,8 +14,9 @@ public class Especialidad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer especialidad_id;
     public String especialidad;
-
-    @OneToMany(mappedBy = "especialidad", cascade = CascadeType.ALL)
+//, cascade = CascadeType.ALL
+    @OneToMany(mappedBy = "especialidad")
+    @JsonIgnore
     List<Medico> medicoEspecialidades = new ArrayList<>();
 
 

@@ -9,8 +9,10 @@ public interface EspecialidadServicio {
 
     Especialidad guardarEspecialidad(Especialidad especialidades);
     List<Especialidad> listarEspecialidades();
-    Optional<Especialidad> obtenerEspecialidadPorId(Integer id);
+    Especialidad obtenerEspecialidadPorId(Integer id);
     Optional<Especialidad> get(Integer id);
+    void eliminarEspecialidadPorId(Integer id);
+    Especialidad actualizarEspecialidad(Especialidad especialidad);
 
 
 }
