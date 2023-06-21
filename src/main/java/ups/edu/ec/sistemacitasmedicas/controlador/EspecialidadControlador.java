@@ -39,20 +39,6 @@ public class EspecialidadControlador {
         especialidadServicio.eliminarEspecialidadPorId(especialidad_id);
     }
 
-    @PutMapping("/actualizarEspecialidad/{especialidad_id}")
-    public Especialidad actualizarEspecialidad(@PathVariable("especialidad_id") Integer especialidad_id, @RequestBody Especialidad especialidad) throws Exception{
-
-        Especialidad especialidadExistente = especialidadServicio.obtenerEspecialidadPorId(especialidad_id);
-
-        if (especialidadExistente != null){
-            especialidadExistente.setEspecialidad(especialidad.getEspecialidad());
-
-            return especialidadServicio.actualizarEspecialidad(especialidadExistente);
-        }else {
-            throw new Exception("Especialidad no encontrada");
-        }
-
-    }
 
 
 

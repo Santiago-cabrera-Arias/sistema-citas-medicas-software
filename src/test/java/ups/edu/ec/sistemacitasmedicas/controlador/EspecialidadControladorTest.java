@@ -1,6 +1,7 @@
 package ups.edu.ec.sistemacitasmedicas.controlador;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.el.stream.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,7 +21,8 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.doNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -60,6 +62,39 @@ public class EspecialidadControladorTest {
                 .andExpect(jsonPath("$.especialidad").value("Cardiología"))
                 .andExpect(jsonPath("$.medicoEspecialidades").isArray());
     }
+
+    @Test
+    public void testListarEspecialidades() throws Exception {
+        // Datos de prueba
+        Especialidad especialidad1 = new Especialidad(1, "Cardiología");
+        Especialidad especialidad2 = new Especialidad(2, "Dermatología");
+        List<Especialidad> especialidades = new ArrayList<>();
+        especialidades.add(especialidad1);
+        especialidades.add(especialidad2);
+
+        // Simula el comportamiento del servicio de especialidad
+        given(especialidadServicio.listarEspecialidades()).willReturn(especialidades);
+
+        // Realiza la solicitud GET al endpoint /especialidad/obtenerEspecialidades
+        mockMvc.perform(get("/especialidad/obtenerEspecialidades"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].especialidad_id", is(1)))
+                .andExpect(jsonPath("$[0].especialidad", is("Cardiología")))
+                .andExpect(jsonPath("$[1].especialidad_id", is(2)))
+                .andExpect(jsonPath("$[1].especialidad", is("Dermatología")));
+    }
+
+
+    @Test
+    public void testEliminarEspecialidad() throws Exception {
+        // Simula el comportamiento del servicio de especialidad
+        doNothing().when(especialidadServicio).eliminarEspecialidadPorId(2);
+
+        // Realiza la solicitud DELETE al endpoint /especialidad/eliminarEspecialidad/{id}
+        mockMvc.perform(delete("/especialidad/eliminarEspecialidad/2"))
+                .andExpect(status().isOk());
+    }
+
 
 
 }
