@@ -50,6 +50,7 @@ public class UsuarioControladorTest {
     @MockBean
     private PersonaServicio personaServicio;
 
+
     @Test
     public void testGuardarUsuario() throws Exception {
         // Datos de prueba
