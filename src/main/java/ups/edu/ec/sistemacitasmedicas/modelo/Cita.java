@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -13,9 +15,11 @@ public class Cita {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cita_id;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date fechaCita;
-    private Time hora;
+    private LocalDate fechaCita;
+
+    private LocalTime hora;
     private boolean estado = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -26,13 +30,13 @@ public class Cita {
 
     public Cita() {
     }
-    public Cita(Integer cita_id, Date fechaCita, Time hora, boolean estado) {
+
+    public Cita(Integer cita_id, LocalDate fechaCita, LocalTime hora, boolean estado) {
         this.cita_id = cita_id;
         this.fechaCita = fechaCita;
         this.hora = hora;
         this.estado = estado;
     }
-
 
     public Integer getCita_id() {
         return cita_id;
@@ -42,19 +46,19 @@ public class Cita {
         this.cita_id = cita_id;
     }
 
-    public Date getFechaCita() {
+    public LocalDate getFechaCita() {
         return fechaCita;
     }
 
-    public void setFechaCita(Date fechaCita) {
+    public void setFechaCita(LocalDate fechaCita) {
         this.fechaCita = fechaCita;
     }
 
-    public Time getHora() {
+    public LocalTime getHora() {
         return hora;
     }
 
-    public void setHora(Time hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
 
