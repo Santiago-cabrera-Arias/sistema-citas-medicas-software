@@ -1,14 +1,12 @@
 package ups.edu.ec.sistemacitasmedicas.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.modelo.Usuario;
-import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
+import ups.edu.ec.sistemacitasmedicas.repositorio.PersonaRepositorio;
 import ups.edu.ec.sistemacitasmedicas.servicio.UsuarioServicio;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -18,26 +16,22 @@ public class UsuarioControlador {
     private UsuarioServicio usuarioServicio;
 
     @Autowired
-    private PersonaServicio personaServicio;
-
-    public UsuarioControlador(UsuarioServicio usuarioServicio) {
-    }
+    private PersonaRepositorio personaRepositorio;
 
     @PostMapping("/registrar")
-    public ResponseEntity<Usuario> guardarUsuario(@RequestBody Usuario usuario) throws Exception {
-        Optional<Persona> persona = personaServicio.get(usuario.getPersona().getPersona_id());
+    public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception {
+//        if (usuario.getUsuario_id() == null) {
+//            throw new Exception("El id del usuario no puede ser nulo");
+//        }
+        // Obtener la Persona por su ID
+        Persona persona = personaRepositorio.findById(usuario.getPersona().getPersona_id())
+                .orElseThrow(() -> new Exception("Persona no encontrada"));
 
-        if (persona.isPresent()) {
-            Persona persons = persona.get();
-            // Asignar la Persona al Usuario
-            usuario.setPersona(persons);
+        // Asignar la Persona al Usuario
+        usuario.setPersona(persona);
 
-            // Guardar el Usuario en la base de datos
-            Usuario nuevoUsuario = usuarioServicio.guardarUsuario(usuario);
-            return ResponseEntity.ok(nuevoUsuario);
-        }
-
-        return ResponseEntity.badRequest().body(usuario);
+        // Guardar el Usuario en la base de datos
+        return usuarioServicio.guardarUsuario(usuario);
     }
 
     @GetMapping("/{username}")
@@ -71,13 +65,8 @@ public class UsuarioControlador {
         }
 
         // Obtener la Persona por su ID
-        Optional<Persona> persona = personaServicio.get(usuario.getPersona().getPersona_id());
-
-        if (!persona.isPresent()){
-            throw new Exception("El usuario no esta presente...");
-        }
-
-        Persona persoons = persona.get();
+        Persona persona = personaRepositorio.findById(usuario.getPersona().getPersona_id())
+                .orElseThrow(() -> new Exception("Persona no encontrada"));
 
         // Actualizar los datos del usuario existente
         usuarioExistente.setEncargo(usuario.getEncargo());
@@ -86,13 +75,11 @@ public class UsuarioControlador {
         usuarioExistente.setEstado(usuario.isEstado());
         usuarioExistente.setGeneral(usuario.isGeneral());
         usuarioExistente.setAdministrador(usuario.isAdministrador());
-        usuarioExistente.setPersona(persoons);
+        usuarioExistente.setPersona(persona);
 
         // Guardar los cambios en la base de datos
         return usuarioServicio.guardarUsuario(usuarioExistente);
     }
-
-    
 
 
 

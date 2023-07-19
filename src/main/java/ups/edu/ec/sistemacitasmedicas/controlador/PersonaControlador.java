@@ -8,6 +8,9 @@ import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaNoEncontradaException;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/personas")
@@ -19,12 +22,18 @@ public class PersonaControlador  {
 
 
     @PostMapping("/registrar")
-    public ResponseEntity<Persona> registrarPersona(@RequestBody Persona persona) {
+    public ResponseEntity<Map<String, Object>> registrarPersona(@RequestBody Persona persona) {
         // Lógica para guardar la persona
         Persona personaGuardada = personaServicio.crearPersona(persona);
-        return ResponseEntity.status(HttpStatus.CREATED).body(personaGuardada);
-    }
+        Integer personaId = personaGuardada.getPersona_id();
 
+        // Crear el objeto JSON de respuesta
+        Map<String, Object> response = new HashMap<>();
+        response.put("persona", personaGuardada);
+        response.put("persona_id", personaId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
     @GetMapping("/{persona_id}")
     public Persona obtenerPersona(@PathVariable("persona_id")Integer persona_id){
         return personaServicio.obtenerPersonaPorId(persona_id);
