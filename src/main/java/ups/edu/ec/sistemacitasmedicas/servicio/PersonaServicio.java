@@ -2,6 +2,7 @@ package ups.edu.ec.sistemacitasmedicas.servicio;
 
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PersonaServicio {
@@ -13,5 +14,7 @@ public interface PersonaServicio {
     void eliminarPersona(Integer id);
 
     Optional<Persona> get(Integer id);
+
+    List<Persona> listarPersonas();
 
 }

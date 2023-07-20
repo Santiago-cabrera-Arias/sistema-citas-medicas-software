@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaExistenteException;
 import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaNoEncontradaException;
+import ups.edu.ec.sistemacitasmedicas.modelo.Especialidad;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.repositorio.PersonaRepositorio;
 import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,6 +57,11 @@ public class PersonaServicioImpl implements PersonaServicio {
     @Override
     public Optional<Persona> get(Integer persona_id) {
         return personaRepositorio.findById(persona_id);
+    }
+
+    @Override
+    public List<Persona> listarPersonas() {
+        return personaRepositorio.findAll();
     }
 
 

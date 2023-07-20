@@ -9,6 +9,7 @@ import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -34,6 +35,9 @@ public class PersonaControlador  {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+
+
     @GetMapping("/{persona_id}")
     public Persona obtenerPersona(@PathVariable("persona_id")Integer persona_id){
         return personaServicio.obtenerPersonaPorId(persona_id);
@@ -68,6 +72,13 @@ public class PersonaControlador  {
             throw new PersonaNoEncontradaException("No se encontró la persona a actualizar.");
         }
     }
+
+    @GetMapping("/obtenerPersonas")
+    public List<Persona> listarPersonas(){
+        return personaServicio.listarPersonas();
+    }
+
+
 
 }
 
