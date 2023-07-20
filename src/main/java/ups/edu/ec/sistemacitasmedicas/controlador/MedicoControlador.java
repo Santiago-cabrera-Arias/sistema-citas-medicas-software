@@ -58,6 +58,10 @@ public class MedicoControlador {
         return medicioServicio.guardarMedicoEspecialidad(medico,medicoEspecialidad);
 
     }
+    @GetMapping("/obtenerMedicos")
+    public List<Medico> listarMedicos(){
+        return medicioServicio.listarMedicos();
+    }
 
 
 }
