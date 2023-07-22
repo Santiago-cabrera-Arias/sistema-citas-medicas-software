@@ -36,14 +36,15 @@ public class CitaControlador {
         Medico medico = new Medico();
         Optional<Medico> medicoOptional = medicioServicio.get(medico_id);
 
-        persona.setPersona_id(personaOptional.get().getPersona_id());
-        medico.setMedico_id(medicoOptional.get().getMedico_id());
-
-        if (!personaOptional.isPresent()) {
+        if (personaOptional.isPresent()) {
+            persona.setPersona_id(personaOptional.get().getPersona_id());
+        } else {
             throw new Exception("La persona no existe");
         }
 
-        if (!medicoOptional.isPresent()) {
+        if (medicoOptional.isPresent()) {
+            medico.setMedico_id(medicoOptional.get().getMedico_id());
+        } else {
             throw new Exception("El medico no existe");
         }
 

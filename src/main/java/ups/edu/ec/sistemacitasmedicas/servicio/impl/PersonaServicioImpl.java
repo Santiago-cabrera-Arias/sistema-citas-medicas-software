@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaExistenteException;
 import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaNoEncontradaException;
 import ups.edu.ec.sistemacitasmedicas.modelo.Especialidad;
+import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 import ups.edu.ec.sistemacitasmedicas.repositorio.PersonaRepositorio;
 import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
@@ -92,6 +93,7 @@ public class PersonaServicioImpl implements PersonaServicio {
         // Guardar los cambios en la base de datos
         return personaRepositorio.save(personaActualizada);
     }
+
 
 
 

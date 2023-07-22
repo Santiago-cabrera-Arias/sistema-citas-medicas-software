@@ -12,7 +12,5 @@ public interface MedicioServicio {
     Medico obtenerMedicoPorId(Integer id);
     Optional<Medico> get(Integer id);
     Medico guardarMedicoEspecialidad(Medico medico, List<Medico> medicoEspecialidades) throws Exception;
-
-
-
+    Medico obtenerMedicoIdPorPersonaId(Integer persona_id);
 }

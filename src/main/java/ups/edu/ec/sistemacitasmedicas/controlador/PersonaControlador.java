@@ -5,12 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ups.edu.ec.sistemacitasmedicas.Exceptions.PersonaNoEncontradaException;
+import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
+import ups.edu.ec.sistemacitasmedicas.servicio.MedicioServicio;
 import ups.edu.ec.sistemacitasmedicas.servicio.PersonaServicio;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -21,6 +24,8 @@ public class PersonaControlador  {
     @Autowired
     PersonaServicio personaServicio;
 
+    @Autowired
+    MedicioServicio medicoServicio;
 
     @PostMapping("/registrar")
     public ResponseEntity<Map<String, Object>> registrarPersona(@RequestBody Persona persona) {
@@ -80,5 +85,7 @@ public class PersonaControlador  {
 
 
 
+
 }
+
 

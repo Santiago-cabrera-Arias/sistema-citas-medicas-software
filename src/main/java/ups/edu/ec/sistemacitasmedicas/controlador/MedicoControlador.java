@@ -1,6 +1,7 @@
 package ups.edu.ec.sistemacitasmedicas.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ups.edu.ec.sistemacitasmedicas.modelo.Especialidad;
 import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
@@ -54,7 +55,6 @@ public class MedicoControlador {
         medico.setEspecialidad(especialidad);
 
         medicoEspecialidad.add(medico);
-
         return medicioServicio.guardarMedicoEspecialidad(medico,medicoEspecialidad);
 
     }
@@ -63,5 +63,20 @@ public class MedicoControlador {
         return medicioServicio.listarMedicos();
     }
 
+
+    @GetMapping("/{medico_id}")
+    public Medico obtenerMedicoId(@PathVariable("medico_id")Integer medico_id){
+        return medicioServicio.obtenerMedicoPorId(medico_id);
+    }
+
+    @GetMapping("/obtenerMedicoIdPorPersonaId/{persona_id}")
+    public ResponseEntity<Integer> obtenerMedicoIdPorPersonaId(@PathVariable("persona_id") Integer persona_id) {
+        Medico medico = medicioServicio.obtenerMedicoIdPorPersonaId(persona_id);
+        if (medico != null) {
+            return ResponseEntity.ok().body(medico.getMedico_id());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

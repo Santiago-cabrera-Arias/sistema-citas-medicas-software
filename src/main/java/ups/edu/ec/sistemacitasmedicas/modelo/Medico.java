@@ -16,9 +16,11 @@ public class Medico {
     private String telenoConsultorio;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     private Persona persona;
 
     @ManyToOne
+    @JsonIgnore
     private Especialidad especialidad;
 
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)

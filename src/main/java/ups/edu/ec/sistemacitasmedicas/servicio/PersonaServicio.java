@@ -1,5 +1,6 @@
 package ups.edu.ec.sistemacitasmedicas.servicio;
 
+import ups.edu.ec.sistemacitasmedicas.modelo.Medico;
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface PersonaServicio {
     Optional<Persona> get(Integer id);
 
     List<Persona> listarPersonas();
+
+
 
 }
