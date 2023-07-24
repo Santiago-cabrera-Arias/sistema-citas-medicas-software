@@ -57,5 +57,11 @@ public class CitaControlador {
 
     }
 
+    @GetMapping("/obtenerCitas")
+    public List<Cita> listarCitas(){
+        return citaServicio.listarCitas();
+    }
+
+
 }
 

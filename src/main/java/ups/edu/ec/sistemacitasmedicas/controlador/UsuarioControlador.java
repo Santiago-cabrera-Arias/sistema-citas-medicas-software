@@ -1,6 +1,8 @@
 package ups.edu.ec.sistemacitasmedicas.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ups.edu.ec.sistemacitasmedicas.modelo.Persona;
@@ -45,15 +47,15 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> login(@RequestBody Usuario usuario) {
         // Obtén el usuario de la base de datos por el nombre de usuario
         Usuario usuarioBD = usuarioServicio.obtenerUsuario(usuario.getUsername());
 
         // Verifica si el usuario existe y si la contraseña coincide
         if (usuarioBD != null && usuarioBD.getPassword().equals(usuario.getPassword())) {
-            return "Inicio de sesión exitoso";
+            return ResponseEntity.ok().body("{\"message\": \"Inicio de sesión exitoso\"}");
         } else {
-            return "Credenciales de inicio de sesión inválidas";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\": \"Credenciales de inicio de sesión inválidas\"}");
         }
     }
     @PutMapping("/{username}")
